@@ -2,7 +2,7 @@ package fr.campus.characters;
 import fr.campus.equipment.*;
 
 public class Character {
-    private final String name;
+    private String name;
     private int attack;
     private int life;
     private int position;
@@ -28,6 +28,9 @@ public class Character {
 
     public String getName(){
         return this.name;
+    }
+    public void setName(String newName){
+        this.name = newName;
     }
 
     public int getLife(){
@@ -58,6 +61,7 @@ public class Character {
     @Override
     public String toString() {
         return "Le personnage " + this.name + " est un " + this.type + ".\n" +
-                "Il possède " + this.life + " points de vie.";
+                "Il possède " + this.life + " points de vie.\n" +
+                "Il peut s'équiper de " + this.offensiveEquipmentType + ".\n";
     }
 }
