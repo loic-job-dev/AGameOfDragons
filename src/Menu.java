@@ -6,9 +6,15 @@ import fr.campus.characters.Character;
 public class Menu {
 
     private final Scanner clavier;
+    private boolean inGame;
 
     public Menu (){
         this.clavier =  new Scanner(System.in);
+        this.inGame = false;
+    }
+
+    protected boolean getInGame() {
+        return this.inGame;
     }
 
     protected void displayMessage(String message){
@@ -69,17 +75,18 @@ public class Menu {
 
     /**
      * This method is the main menu of the game; it offers the user choices (display information about the character,
-     * rename the character, or leave the game).
+     * rename the character, and begin or leave the game).
      *
      * @param character is the character created at the beginning.
      */
     protected void principal(Character character) {
-        boolean inGame = true;
+        boolean paused = true;
 
-        while (inGame) {
+        while (paused) {
             displayMessage("Que veux-tu faire ?\n" +
                     "1- Voir les statistiques de ton personnage.\n" +
                     "2- Modifier son nom.\n" +
+                    "3- Commencer la partie (à venir).\n" +
                     "9- Quitter le jeu (lâcheur...)\n" +
                     "Tapper le chiffre correspondant au choix");
 
@@ -108,9 +115,14 @@ public class Menu {
                     displayMessage("\nTon personnage se nomme à présent " + character.getName() + ".");
                 }
 
+                if (choice == 3) {
+                    inGame = true;
+                    paused = false;
+                }
+
                 if (choice == 9) {
                     displayMessage("\nAu revoir " + character.getName() + ", puisse le Valhala t'accueillir dans dans sa fête éternelle...\n");
-                    inGame = false;
+                    paused = false;
                 }
             } catch (InputMismatchException e) {
                 displayMessage("\nMerci de saisir un chiffre pour indiquer ton choix.\n");

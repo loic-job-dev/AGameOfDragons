@@ -20,6 +20,7 @@ public class Character {
         this.life = life;
         this.attack = attack;
         this.offensiveEquipmentType = offensiveEquipmentType;
+        this.position = 0;
     }
 
     public String getType() {
@@ -62,6 +63,7 @@ public class Character {
     public String toString() {
         return "Le personnage " + this.name + " est un " + this.type + ".\n" +
                 "Il possède " + this.life + " points de vie.\n" +
-                "Il peut s'équiper de " + this.offensiveEquipmentType + ".\n";
+                "Il peut s'équiper de " + this.offensiveEquipmentType + ".\n" +
+                "Sur le plateau, il se trouve à la case " + this.position + ".\n";
     }
 }
