@@ -1,3 +1,6 @@
+package fr.campus.characters;
+import fr.campus.equipment.*;
+
 public class Character {
     private final String name;
     private int attack;
@@ -9,7 +12,7 @@ public class Character {
     private final String type;
 
     //For the next steps :
-    //private OffensiveEquipment;
+    //private Equipment.OffensiveEquipment;
 
     public Character(String type, String name, int life, int attack, String offensiveEquipmentType){
         this.type = type;

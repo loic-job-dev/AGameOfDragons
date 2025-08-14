@@ -1,3 +1,5 @@
+package fr.campus.equipment;
+
 public class DefensiveEquipment {
     private final String type;
     private final String name;
