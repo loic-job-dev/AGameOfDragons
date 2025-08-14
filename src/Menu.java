@@ -116,7 +116,7 @@ public class Menu {
                 }
 
                 if (choice == 3) {
-                    inGame = true;
+                    this.inGame = true;
                     paused = false;
                 }
 
