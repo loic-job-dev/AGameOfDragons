@@ -51,4 +51,10 @@ public class Character {
     public String getOffensiveEquipmentType(){
         return this.offensiveEquipmentType;
     }
+
+    @Override
+    public String toString() {
+        return "Le personnage " + this.name + " est un " + this.type + ".\n" +
+                "Il possède " + this.life + " points de vie.";
+    }
 }

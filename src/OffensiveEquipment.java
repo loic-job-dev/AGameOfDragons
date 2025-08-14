@@ -20,4 +20,9 @@ public class OffensiveEquipment {
     public int getAttackBuff(){
         return this.attackBuff;
     }
+
+    @Override
+    public String toString() {
+        return "Cet équipement de type " + type + " nommé " + name + " booste l'attaque de " + attackBuff + " points.";
+    }
 }

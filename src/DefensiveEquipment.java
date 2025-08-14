@@ -20,4 +20,9 @@ public class DefensiveEquipment {
     public int getDefenseBuff(){
         return this.defenseBuff;
     }
+
+    @Override
+    public String toString() {
+        return "Cet équipement de type " + type + " nommé " + name + " booste la défense de " + defenseBuff + " points.";
+    }
 }
