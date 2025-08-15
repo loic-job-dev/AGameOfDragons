@@ -2,6 +2,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import fr.campus.characters.*;
 import fr.campus.characters.Character;
+import fr.campus.material.Board;
+import fr.campus.material.Dice;
 
 public class Menu {
 
@@ -86,15 +88,23 @@ public class Menu {
      * @param character is the character created at the beginning.
      */
     protected void principal(Character character) {
-        boolean paused = true;
 
         while (gamePaused && !gameClosed) {
-            displayMessage("Que veux-tu faire ?\n" +
-                    "1- Voir les statistiques de ton personnage.\n" +
-                    "2- Modifier son nom.\n" +
-                    "3- Commencer la partie.\n" +
-                    "9- Quitter le jeu (lâcheur...)\n" +
-                    "Tapper le chiffre correspondant au choix");
+            if (character.getPosition() == 0) {
+                displayMessage("Que veux-tu faire ?\n" +
+                        "1- Voir les statistiques de ton personnage.\n" +
+                        "2- Modifier son nom.\n" +
+                        "3- Commencer la partie.\n" +
+                        "9- Quitter le jeu (lâcheur...)\n" +
+                        "Tapper le chiffre correspondant au choix");
+            } else {
+                displayMessage("\nQue veux-tu faire ?\n" +
+                        "1- Voir les statistiques de ton personnage.\n" +
+                        "2- Modifier son nom.\n" +
+                        "3- Reprendre la partie.\n" +
+                        "9- Quitter le jeu (lâcheur...)\n" +
+                        "Tapper le chiffre correspondant au choix");
+            }
 
             try {
                 int choice = clavier.nextInt();
@@ -134,5 +144,37 @@ public class Menu {
                 clavier.nextLine();
             };
         }
+    }
+
+    protected void playerTurn(Character character, Board board, Dice dice) {
+        displayMessage("Que veux-tu faire ?\n" +
+                "1- Lancer le dé.\n" +
+                "2- Mettre le jeu en pause.\n" +
+                "Tapper le chiffre correspondant au choix");
+
+        try {
+            int choice = clavier.nextInt();
+            clavier.nextLine();
+
+            if (choice == 1) {
+                displayMessage("Le dé est lancé...");
+                int diceNumber = dice.rollDice();
+                displayMessage("\nLe dé affiche " + diceNumber + ".");
+                character.setPosition(character.getPosition()+diceNumber);
+                if (character.getPosition() > board.getNumTiles()){
+                    character.setPosition(board.getNumTiles());
+                }
+            }
+
+            if (choice == 2) {
+                this.gamePaused = true;
+                this.gameClosed = false;
+                principal(character);
+            }
+
+        } catch (InputMismatchException e) {
+            displayMessage("\nMerci de saisir un chiffre pour indiquer ton choix.\n");
+            clavier.nextLine();
+        };
     }
 }

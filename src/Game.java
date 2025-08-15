@@ -38,13 +38,7 @@ public class Game {
 
         while (character.getPosition() != board.getNumTiles()) {
             menu.displayMessage("\nle personnage est en position " + character.getPosition() + ".\n");
-            menu.displayMessage("Le dé est lancé...\n");
-            int diceNumber = dice.rollDice();
-            menu.displayMessage("\nLe dé affiche " + diceNumber + ".\n");
-            character.setPosition(character.getPosition()+diceNumber);
-            if (character.getPosition() > board.getNumTiles()){
-                character.setPosition(board.getNumTiles());
-            }
+            menu.playerTurn(character, board, dice);
         }
         menu.displayMessage("Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
     }
