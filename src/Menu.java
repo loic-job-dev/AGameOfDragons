@@ -6,15 +6,21 @@ import fr.campus.characters.Character;
 public class Menu {
 
     private final Scanner clavier;
-    private boolean inGame;
+    private boolean gamePaused;
+    private boolean gameClosed;
 
     public Menu (){
         this.clavier =  new Scanner(System.in);
-        this.inGame = false;
+        this.gamePaused = true;
+        this.gameClosed = false;
     }
 
-    protected boolean getInGame() {
-        return this.inGame;
+    protected boolean getGamePaused() {
+        return this.gamePaused;
+    }
+
+    protected boolean getGameClosed() {
+        return this.gameClosed;
     }
 
     protected void displayMessage(String message){
@@ -82,11 +88,11 @@ public class Menu {
     protected void principal(Character character) {
         boolean paused = true;
 
-        while (paused) {
+        while (gamePaused && !gameClosed) {
             displayMessage("Que veux-tu faire ?\n" +
                     "1- Voir les statistiques de ton personnage.\n" +
                     "2- Modifier son nom.\n" +
-                    "3- Commencer la partie (à venir).\n" +
+                    "3- Commencer la partie.\n" +
                     "9- Quitter le jeu (lâcheur...)\n" +
                     "Tapper le chiffre correspondant au choix");
 
@@ -116,13 +122,12 @@ public class Menu {
                 }
 
                 if (choice == 3) {
-                    this.inGame = true;
-                    paused = false;
+                    this.gamePaused = false;
                 }
 
                 if (choice == 9) {
                     displayMessage("\nAu revoir " + character.getName() + ", puisse le Valhala t'accueillir dans dans sa fête éternelle...\n");
-                    paused = false;
+                    this.gameClosed = true;
                 }
             } catch (InputMismatchException e) {
                 displayMessage("\nMerci de saisir un chiffre pour indiquer ton choix.\n");

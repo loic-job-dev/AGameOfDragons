@@ -14,27 +14,20 @@ public class Game {
         this.board = new Board(64);
     }
 
-    public void play(){
+    public void launchGame(){
 
         menu.displayMessage("Bonjour à toi, nouveau joueur.\n" +
                 "Commence par créer ton personnage.\n");
 
         Character player =  menu.createCharacter();
 
-        menu.displayMessage("Bienvenue sur A Game Of Dragons !\n" +
+        menu.displayMessage("Bienvenue sur A Game Of Dragons " + player.getName() + " !\n" +
                 "Prêt à souffrir ?\n");
 
-        /*
-        int test = 0;
-        while (test!=6) {
-            test = dice.rollDice();
-            System.out.println(test);
-        }
-        */
 
         menu.principal(player);
 
-        if (menu.getInGame()){
+        if (!menu.getGamePaused()){
             startGame(player, board, dice);
         }
 
