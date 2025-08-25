@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"fr.campus.loic.agameofdragons"},{"l":"fr.campus.loic.agameofdragons.characters"},{"l":"fr.campus.loic.agameofdragons.equipment"},{"l":"fr.campus.loic.agameofdragons.material"}];updateSearchResults();
