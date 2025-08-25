@@ -159,7 +159,6 @@ public class Menu {
      * @param dice is the dice created for the game, with a defined number of faces.
      */
     protected void playerTurn(Character character, Board board, Dice dice) {
-        while (!gameClosed) {
             displayMessage("\nle personnage est en position " + character.getPosition() + ".\n");
             displayMessage("Que veux-tu faire ?\n" +
                     "1- Lancer le dé.\n" +
@@ -189,8 +188,6 @@ public class Menu {
             } catch (InputMismatchException e) {
                 displayMessage("\nMerci de saisir un chiffre pour indiquer ton choix.\n");
                 clavier.nextLine();
-            }
-            ;
-        }
+            };
     }
 }

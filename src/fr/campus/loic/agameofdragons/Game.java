@@ -55,9 +55,11 @@ public class Game {
     private void startGame(Character character, Board board, Dice dice){
         menu.displayMessage("Début de la partie !");
 
-        while (character.getPosition() != board.getNumTiles()) {
+        while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
             menu.playerTurn(character, board, dice);
         }
-        menu.displayMessage("Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
+        if (character.getPosition() == board.getNumTiles()) {
+            menu.displayMessage("Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
+        }
     }
 }
