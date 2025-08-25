@@ -83,7 +83,7 @@ public class Menu {
 
     /**
      * This method is the main menu of the game; it offers the user choices (display information about the character,
-     * rename the character, and begin or leave the game).
+     * rename the character, and begin, pause, or leave the game).
      *
      * @param character is the character created at the beginning.
      */
@@ -146,6 +146,13 @@ public class Menu {
         }
     }
 
+    /**
+     * This method allows the player to make choices during his turn : launch the dice, or set the game in pause.
+     *
+     * @param character is the Character created by the player at the beginning
+     * @param board is the board created, with a defined number of tiles.
+     * @param dice is the dice created for the game, with a defined number of faces.
+     */
     protected void playerTurn(Character character, Board board, Dice dice) {
         displayMessage("Que veux-tu faire ?\n" +
                 "1- Lancer le dé.\n" +
