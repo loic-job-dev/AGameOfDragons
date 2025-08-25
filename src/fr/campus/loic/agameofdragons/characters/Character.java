@@ -1,5 +1,7 @@
 package fr.campus.loic.agameofdragons.characters;
 
+import fr.campus.loic.agameofdragons.tools.ConsoleColors;
+
 /**
  * This class represent the character that the player will play with.
  */
@@ -72,7 +74,7 @@ public class Character {
 
     @Override
     public String toString() {
-        return String.format("""
+        return String.format(ConsoleColors.PURPLE + """
         Le personnage %s est un %s.
         Il possède %d points de vie.
         Il peut s'équiper de %s.
