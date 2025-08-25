@@ -72,9 +72,12 @@ public class Character {
 
     @Override
     public String toString() {
-        return "Le personnage " + this.name + " est un " + this.type + ".\n" +
-                "Il possède " + this.life + " points de vie.\n" +
-                "Il peut s'équiper de " + this.offensiveEquipmentType + ".\n" +
-                "Sur le plateau, il se trouve à la case " + this.position + ".\n";
+        return String.format("""
+        Le personnage %s est un %s.
+        Il possède %d points de vie.
+        Il peut s'équiper de %s.
+        Sur le plateau, il se trouve à la case %d.
+        """, this.name, this.type, this.life, this.offensiveEquipmentType, this.position);
     }
+
 }

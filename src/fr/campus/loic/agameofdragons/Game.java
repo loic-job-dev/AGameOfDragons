@@ -3,6 +3,7 @@ package fr.campus.loic.agameofdragons;
 import fr.campus.loic.agameofdragons.characters.Character;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.material.Board;
+import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 /**
  * This class implements all the game logic
@@ -28,13 +29,13 @@ public class Game {
      */
     public void launchGame(){
 
-        menu.displayMessage("Bonjour à toi, nouveau joueur.\n" +
-                "Commence par créer ton personnage.\n");
+        menu.displayMessage(ConsoleColors.CYAN + "Bonjour à toi, nouveau joueur.\n" +
+                ConsoleColors.YELLOW + "Commence par créer ton personnage.\n");
 
         Character player =  menu.createCharacter();
 
-        menu.displayMessage("Bienvenue sur A Game Of Dragons " + player.getName() + " !\n" +
-                "Prêt à souffrir ?\n");
+        menu.displayMessage(ConsoleColors.CYAN + "Bienvenue sur A Game Of Dragons, " + player.getName() + " !\n" +
+                ConsoleColors.RED + "Prêt à souffrir ?\n");
 
 
         menu.principal(player);
@@ -53,13 +54,13 @@ public class Game {
      * @param dice is the dice created for the game, with a defined number of faces.
      */
     private void startGame(Character character, Board board, Dice dice){
-        menu.displayMessage("Début de la partie !");
+        menu.displayMessage(ConsoleColors.RED + "Début de la partie !");
 
         while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
             menu.playerTurn(character, board, dice);
         }
         if (character.getPosition() == board.getNumTiles()) {
-            menu.displayMessage("Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
+            menu.displayMessage(ConsoleColors.BOLD_GREEN + "Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
         }
     }
 }

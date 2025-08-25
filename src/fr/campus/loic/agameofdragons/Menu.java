@@ -6,6 +6,7 @@ import java.util.Scanner;
 import fr.campus.loic.agameofdragons.characters.Character;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.material.Dice;
+import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 /**
  * This class implements all the methods to allow the player to read instructions and give his choices
@@ -31,7 +32,7 @@ public class Menu {
     }
 
     protected void displayMessage(String message){
-        System.out.println(message);
+        System.out.println(message  + ConsoleColors.RESET);
     }
 
     /**
@@ -47,20 +48,20 @@ public class Menu {
         boolean nameIsValid = false;
 
         //validation of the name
-        displayMessage("Comment se nommera ton personnage ?");
+        displayMessage(ConsoleColors.CYAN + "Comment se nommera ton personnage ?");
         while (!nameIsValid) {
             name = clavier.nextLine();
             if (name.trim().isEmpty()) {
-                displayMessage("\nMerci de renseigner un nom\n");
+                displayMessage(ConsoleColors.BOLD_RED + "\nMerci de renseigner un nom\n");
             }
             else {
                 nameIsValid = true;
             }
         }
-        displayMessage("\nTon personnage se nommera " + name + ".\n");
+        displayMessage(ConsoleColors.PURPLE + "\nTon personnage se nommera " + name + ".\n");
 
         //Validation of the type of character
-        displayMessage("Quel type de personnage veux-tu incarner ? \nGuerrier ou Mage ?");
+        displayMessage(ConsoleColors.CYAN + "Quel type de personnage veux-tu incarner ? \nGuerrier ou Mage ?");
         while(!typeIsValid) {
             type = clavier.next();
             if (type.equals("Guerrier") || type.equals("Mage")) {
@@ -71,10 +72,10 @@ public class Menu {
                     characterType =  "Magician";
                 }
             } else {
-                displayMessage ("\nMerci saisir \"Guerrier\" ou \"Mage\" uniquement !\n");
+                displayMessage (ConsoleColors.BOLD_RED + "\nMerci saisir \"Guerrier\" ou \"Mage\" uniquement !\n");
             }
         }
-        displayMessage("\nTon personnage sera de la classe " + characterType + ".\n");
+        displayMessage(ConsoleColors.PURPLE + "\nTon personnage sera de la classe " + characterType + ".\n");
 
         //Creation of the character
         Character character;
@@ -96,19 +97,19 @@ public class Menu {
 
         while (gamePaused && !gameClosed) {
             if (character.getPosition() == 0) {
-                displayMessage("Que veux-tu faire ?\n" +
+                displayMessage(ConsoleColors.CYAN + "Que veux-tu faire ?\n" +
                         "1- Voir les statistiques de ton personnage.\n" +
                         "2- Modifier son nom.\n" +
-                        "3- Commencer la partie.\n" +
-                        "9- Quitter le jeu (lâcheur...)\n" +
-                        "Tapper le chiffre correspondant au choix");
+                        ConsoleColors.GREEN + "3- Commencer la partie.\n" +
+                        ConsoleColors.RED + "9- Quitter le jeu (lâcheur...)\n" + ConsoleColors.RESET +
+                        ConsoleColors.YELLOW + "Tapper le chiffre correspondant au choix");
             } else {
-                displayMessage("\nQue veux-tu faire ?\n" +
+                displayMessage(ConsoleColors.CYAN + "\nQue veux-tu faire ?\n" +
                         "1- Voir les statistiques de ton personnage.\n" +
                         "2- Modifier son nom.\n" +
-                        "3- Reprendre la partie.\n" +
-                        "9- Quitter le jeu (lâcheur...)\n" +
-                        "Tapper le chiffre correspondant au choix");
+                        ConsoleColors.GREEN + "3- Reprendre la partie.\n" +
+                        ConsoleColors.RED + "9- Quitter le jeu (lâcheur...)\n" + ConsoleColors.RESET +
+                        ConsoleColors.YELLOW + "Tapper le chiffre correspondant au choix");
             }
 
             try {
@@ -119,33 +120,36 @@ public class Menu {
                     displayMessage("\n" + character.toString());
                 }
 
-                if (choice == 2) {
+                else if (choice == 2) {
                     boolean nameIsValid = false;
                     String newName = "error";
-                    displayMessage("\nComment se nomme ton personnage à présent ?");
+                    displayMessage(ConsoleColors.CYAN + "\nComment se nomme ton personnage à présent ?");
                     while (!nameIsValid) {
                         newName = clavier.nextLine();
                         if (newName.trim().isEmpty()) {
-                            displayMessage("\nMerci de renseigner un nom");
+                            displayMessage(ConsoleColors.BOLD_RED + "\nMerci de renseigner un nom");
                         } else {
                             nameIsValid = true;
                             character.setName(newName);
                             ;
                         }
                     }
-                    displayMessage("\nTon personnage se nomme à présent " + character.getName() + ".");
+                    displayMessage(ConsoleColors.PURPLE + "\nTon personnage se nomme à présent " + character.getName() + ".");
                 }
 
-                if (choice == 3) {
+                else if (choice == 3) {
                     this.gamePaused = false;
                 }
 
-                if (choice == 9) {
-                    displayMessage("\nAu revoir " + character.getName() + ", puisse le Valhala t'accueillir dans dans sa fête éternelle...\n");
+                else if (choice == 9) {
+                    displayMessage(ConsoleColors.BLUE + "\nAu revoir " + character.getName() + ", puisse le Valhala t'accueillir dans dans sa fête éternelle...\n");
                     this.gameClosed = true;
                 }
+                else {
+                    displayMessage(ConsoleColors.BOLD_RED + "\nMerci de saisir un chiffre valide pour indiquer ton choix.\n");
+                }
             } catch (InputMismatchException e) {
-                displayMessage("\nMerci de saisir un chiffre pour indiquer ton choix.\n");
+                displayMessage(ConsoleColors.BOLD_RED + "\nMerci de saisir un chiffre valide pour indiquer ton choix.\n");
                 clavier.nextLine();
             };
         }
@@ -159,35 +163,40 @@ public class Menu {
      * @param dice is the dice created for the game, with a defined number of faces.
      */
     protected void playerTurn(Character character, Board board, Dice dice) {
-            displayMessage("\nle personnage est en position " + character.getPosition() + ".\n");
-            displayMessage("Que veux-tu faire ?\n" +
-                    "1- Lancer le dé.\n" +
-                    "2- Mettre le jeu en pause.\n" +
-                    "Tapper le chiffre correspondant au choix");
+        displayMessage(ConsoleColors.CYAN + "le personnage est en position " + character.getPosition() + ".\n");
+        displayMessage(ConsoleColors.CYAN + "Que veux-tu faire ?\n" +
+                "1- Lancer le dé.\n" +
+                ConsoleColors.BLUE + "2- Mettre le jeu en pause.\n" +
+                ConsoleColors.YELLOW + "Tapper le chiffre correspondant au choix");
 
-            try {
-                int choice = clavier.nextInt();
-                clavier.nextLine();
+        try {
+            // Throws an InputMismatchException if the user doesn't give an integer
+            int choice = clavier.nextInt();
+            clavier.nextLine();
 
-                if (choice == 1) {
-                    displayMessage("Le dé est lancé...");
-                    int diceNumber = dice.rollDice();
-                    displayMessage("\nLe dé affiche " + diceNumber + ".");
-                    character.setPosition(character.getPosition() + diceNumber);
-                    if (character.getPosition() > board.getNumTiles()) {
-                        character.setPosition(board.getNumTiles());
-                    }
+            if (choice == 1) {
+                displayMessage(ConsoleColors.YELLOW + "Le dé est lancé...");
+                int diceNumber = dice.rollDice();
+                displayMessage(ConsoleColors.PURPLE + "\nLe dé affiche " + diceNumber + ".");
+                character.setPosition(character.getPosition() + diceNumber);
+                if (character.getPosition() > board.getNumTiles()) {
+                    character.setPosition(board.getNumTiles());
                 }
+            }
 
-                if (choice == 2) {
-                    this.gamePaused = true;
-                    this.gameClosed = false;
-                    principal(character);
-                }
+            else if (choice == 2) {
+                this.gamePaused = true;
+                this.gameClosed = false;
+                principal(character);
+            }
 
-            } catch (InputMismatchException e) {
-                displayMessage("\nMerci de saisir un chiffre pour indiquer ton choix.\n");
-                clavier.nextLine();
-            };
+            else {
+                displayMessage(ConsoleColors.BOLD_RED + "\nMerci de saisir un chiffre valide pour indiquer ton choix.\n");
+            }
+
+        } catch (InputMismatchException e) {
+            displayMessage(ConsoleColors.BOLD_RED + "\nMerci de saisir un chiffre valide pour indiquer ton choix.\n");
+            clavier.nextLine();
+        };
     }
 }
