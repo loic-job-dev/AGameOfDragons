@@ -6,10 +6,15 @@ import fr.campus.loic.agameofdragons.tools.TextAreaHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,18 +28,26 @@ public class GuiMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //Setting a specific font style and size
+        Font font = Font.font("Noto Sans", FontWeight.NORMAL, FontPosture.ITALIC, 18);
 
         // TextArea to display the messages
         TextArea consoleArea = new TextArea();
         consoleArea.setEditable(false);
+        consoleArea.setFont(font);
 
         // TextField for the user's text
+        Label playerInputLabel = new Label("Saisie joueur :");
+        playerInputLabel.setFont(font);
         TextField inputField = new TextField();
+        inputField.setFont(font);
+        VBox bottomBox = new VBox();
+        bottomBox.getChildren().addAll(playerInputLabel, inputField);
 
         // Layout
         BorderPane root = new BorderPane();
         root.setCenter(consoleArea);
-        root.setBottom(inputField);
+        root.setBottom(bottomBox);
 
         Scene scene = new Scene(root, 1080, 610, Color.BLACK);
         primaryStage.setScene(scene);
