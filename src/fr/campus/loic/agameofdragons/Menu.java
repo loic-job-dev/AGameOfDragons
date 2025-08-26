@@ -7,6 +7,7 @@ import fr.campus.loic.agameofdragons.characters.Character;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
+import fr.campus.loic.agameofdragons.tools.GameLogger;
 
 /**
  * This class implements all the methods to allow the player to read instructions and give his choices
@@ -26,13 +27,24 @@ public class Menu {
     protected boolean getGamePaused() {
         return this.gamePaused;
     }
+    protected void setGamePaused(boolean newBool) {
+        this.gamePaused = newBool;
+    }
 
     protected boolean getGameClosed() {
         return this.gameClosed;
     }
+    protected void setGameClosed(boolean newBool) {
+        this.gameClosed = newBool;
+    }
 
+    /**
+     * This method calls the {@link GameLogger#LOGGER} logger.
+     *
+     * @param message is the message displayed
+     */
     protected void displayMessage(String message){
-        System.out.println(message  + ConsoleColors.RESET);
+        GameLogger.LOGGER.info(message  + ConsoleColors.RESET);
     }
 
     /**

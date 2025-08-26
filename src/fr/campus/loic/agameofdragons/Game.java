@@ -44,6 +44,9 @@ public class Game {
             startGame(player, board, dice);
         }
 
+        if (menu.getGameClosed()){
+            System.exit(0);
+        }
     }
 
     /**
@@ -61,6 +64,7 @@ public class Game {
         }
         if (character.getPosition() == board.getNumTiles()) {
             menu.displayMessage(ConsoleColors.BOLD_GREEN + "Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
+            menu.setGameClosed(true);
         }
     }
 }
