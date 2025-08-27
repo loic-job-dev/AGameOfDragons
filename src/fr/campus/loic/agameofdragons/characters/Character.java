@@ -1,5 +1,6 @@
 package fr.campus.loic.agameofdragons.characters;
 
+import fr.campus.loic.agameofdragons.equipment.*;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 /**
@@ -10,13 +11,14 @@ public abstract class Character {
     protected int attack;
     protected int life;
     protected int position;
-    protected String offensiveEquipmentType;
+    protected OffensiveEquipment offensiveEquipment;
+    protected DefensiveEquipment defensiveEquipment;
 
-    //To display the class name in french :
+    //To display the toString method in french :
     protected String type;
+    protected String offensiveEquipmentType;
+    protected String defensiveEquipmentType;
 
-    //For the next steps :
-    //private Equipment.OffensiveEquipment;
 
     /**
      * The constructor of the class that sets some parameters
@@ -63,16 +65,37 @@ public abstract class Character {
     public String getOffensiveEquipmentType(){
         return offensiveEquipmentType;
     }
+    public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) {
+        this.offensiveEquipment = offensiveEquipment;
+    }
+
+    public String getDefensiveEquipmentType(){
+        return defensiveEquipmentType;
+    }
+    public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) {
+        this.defensiveEquipment = defensiveEquipment;
+    }
 
     @Override
     public String toString() {
-        return String.format(ConsoleColors.PURPLE + """
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format(ConsoleColors.PURPLE + """
         Le personnage %s est un %s.
         Il possède %d points de vie.
         Il peut s'équiper de %s.
         Son attaque actuelle est de %d
         Sur le plateau, il se trouve à la case %d.
-        """, this.name, this.type, this.life, this.offensiveEquipmentType, this.attack, this.position);
-    }
+        """, this.name, this.type, this.life, this.offensiveEquipmentType, this.attack, this.position));
 
+        if (this.offensiveEquipment != null) {
+            sb.append("Il est équipé de : ").append(this.offensiveEquipment.toString()).append("\n");
+        }
+
+        if (this.defensiveEquipment != null) {
+            sb.append("Il se protège avec : ").append(this.defensiveEquipment.toString()).append("\n");
+        }
+
+        return sb.toString();
+    }
 }

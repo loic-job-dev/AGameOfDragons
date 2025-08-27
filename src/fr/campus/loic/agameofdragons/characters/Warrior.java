@@ -1,8 +1,9 @@
 package fr.campus.loic.agameofdragons.characters;
 
+import fr.campus.loic.agameofdragons.equipment.DefensiveEquipment;
+import fr.campus.loic.agameofdragons.equipment.OffensiveEquipment;
 import fr.campus.loic.agameofdragons.equipment.Shield;
 import fr.campus.loic.agameofdragons.equipment.Weapon;
-import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 public class Warrior extends Character {
 
@@ -19,6 +20,23 @@ public class Warrior extends Character {
         this.type = "guerrier";
         this.attack = 5;
         this.life = 10;
-        this.offensiveEquipmentType = "bouclier";
+        this.offensiveEquipmentType = "arme";
+        this.defensiveEquipmentType = "bouclier";
+    }
+
+    @Override
+    public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) {
+        if (offensiveEquipment.getOwner().equals("guerrier")) {
+            super.setOffensiveEquipment(offensiveEquipment);
+            this.attack = 6 + offensiveEquipment.getAttackBuff();
+        }
+    }
+
+    @Override
+    public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) {
+        if (defensiveEquipment.getOwner().equals("guerrier")) {
+            super.setDefensiveEquipment(defensiveEquipment);
+        }
     }
 }
+

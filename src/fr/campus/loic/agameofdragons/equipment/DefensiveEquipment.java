@@ -17,7 +17,7 @@ public abstract class DefensiveEquipment {
         this.name = name;
     }
 
-    public String getType(){
+    public String getOwner(){
         return this.owner;
     }
 
@@ -31,6 +31,6 @@ public abstract class DefensiveEquipment {
 
     @Override
     public String toString() {
-        return "Cet équipement réservé au " + owner + " nommé " + name + " booste la défense de " + defenseBuff + " points.";
+        return this.name + ", réservée au " + this.owner + ", et qui booste la défense de " + defenseBuff + " points.";
     }
 }

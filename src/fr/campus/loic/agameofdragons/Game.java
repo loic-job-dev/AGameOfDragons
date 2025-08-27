@@ -1,6 +1,8 @@
 package fr.campus.loic.agameofdragons;
 
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.equipment.Potion;
+import fr.campus.loic.agameofdragons.equipment.Weapon;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
@@ -58,6 +60,16 @@ public class Game {
      */
     private void startGame(Character character, Board board, Dice dice){
         menu.displayMessage(ConsoleColors.RED + "Début de la partie !");
+
+        //Attribution test for a weapon to a warrior :
+        Weapon massue = new Weapon("massue", 3);
+        character.setOffensiveEquipment(massue);
+        menu.displayMessage(character.toString());
+
+        //Attribution test for a potion to a magician :
+        Potion philtre = new Potion("Peau de pierre", 3);
+        character.setDefensiveEquipment(philtre);
+        menu.displayMessage(character.toString());
 
         while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
             menu.playerTurn(character, board, dice);
