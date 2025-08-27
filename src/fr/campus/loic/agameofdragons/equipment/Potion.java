@@ -9,7 +9,7 @@ public class Potion extends DefensiveEquipment {
      */
     public Potion(String name, int defenseBuff) {
         super(name);
-        this.owner = "mage";
+        this.owner = "magicien";
         this.defenseBuff = defenseBuff;
     }
 }

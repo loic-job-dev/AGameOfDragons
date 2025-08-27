@@ -1,6 +1,7 @@
 package fr.campus.loic.agameofdragons.characters;
 
 import fr.campus.loic.agameofdragons.equipment.*;
+import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 /**
@@ -65,14 +66,20 @@ public abstract class Character {
     public String getOffensiveEquipmentType(){
         return offensiveEquipmentType;
     }
-    public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) {
+    public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) throws WrongEquipmentException {
+        if (!this.type.equals(offensiveEquipment.getOwner())) {
+            throw new WrongEquipmentException("Tu as trouvé un " + offensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !");
+        }
         this.offensiveEquipment = offensiveEquipment;
     }
 
     public String getDefensiveEquipmentType(){
         return defensiveEquipmentType;
     }
-    public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) {
+    public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) throws WrongEquipmentException {
+        if (!this.type.equals(defensiveEquipment.getOwner())) {
+            throw new WrongEquipmentException("Tu as trouvé un(e) " + defensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !");
+        }
         this.defensiveEquipment = defensiveEquipment;
     }
 

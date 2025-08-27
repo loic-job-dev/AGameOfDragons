@@ -4,6 +4,7 @@ import fr.campus.loic.agameofdragons.characters.Character;
 import fr.campus.loic.agameofdragons.equipment.Potion;
 import fr.campus.loic.agameofdragons.equipment.Weapon;
 import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
+import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
@@ -64,13 +65,23 @@ public class Game {
 
         //Attribution test for a weapon to a warrior :
         Weapon massue = new Weapon("massue", 3);
-        character.setOffensiveEquipment(massue);
-        menu.displayMessage(character.toString());
+        try {
+            character.setOffensiveEquipment(massue);
+            menu.displayMessage("Tu t'équipes d'un(e) " + massue.getName());
+            menu.displayMessage(character.toString());
+        } catch (WrongEquipmentException e) {
+            menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
+        }
 
         //Attribution test for a potion to a magician :
         Potion philtre = new Potion("Peau de pierre", 3);
-        character.setDefensiveEquipment(philtre);
-        menu.displayMessage(character.toString());
+        try {
+            character.setDefensiveEquipment(philtre);
+            menu.displayMessage("Tu t'équipes d'un(e) " + philtre.getName());
+            menu.displayMessage(character.toString());
+        } catch (WrongEquipmentException e) {
+            menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
+        }
 
         while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
             try {

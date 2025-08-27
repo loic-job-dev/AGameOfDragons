@@ -11,6 +11,7 @@ public class Magician extends Character {
     protected Spell spell;
     protected Potion potion;
 
+
     /**
      * The constructor of the class that sets some parameters
      *
@@ -23,30 +24,5 @@ public class Magician extends Character {
         this.life = 6;
         this.offensiveEquipmentType = "sort";
         this.defensiveEquipmentType = "philtre";
-    }
-
-    /**
-     * This method allows the character to equip the good kind of offensive equipment
-     *
-     * @param offensiveEquipment is the offensive equipment that will be equipped if allowed
-     */
-    @Override
-    public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) {
-        if (offensiveEquipment.getOwner().equals("mage")) {
-            super.setOffensiveEquipment(offensiveEquipment);
-            this.attack = 6 + offensiveEquipment.getAttackBuff();
-        }
-    }
-
-    /**
-     * This method allows the character to equip the good kind of defensive equipment
-     *
-     * @param defensiveEquipment is the defensive equipment that will be equipped if allowed
-     */
-    @Override
-    public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) {
-        if (defensiveEquipment.getOwner().equals("mage")) {
-            super.setDefensiveEquipment(defensiveEquipment);
-        }
     }
 }
