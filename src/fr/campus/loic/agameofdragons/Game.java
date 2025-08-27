@@ -90,6 +90,12 @@ public class Game {
         }
     }
 
+    /**
+     * This method allows a character to equip an object
+     *
+     * @param character is the character finding the object
+     * @param defensiveEquipment is the defensive object found
+     */
     private void findEquipment (Character character, DefensiveEquipment defensiveEquipment) {
         try {
             character.setDefensiveEquipment(defensiveEquipment);
@@ -99,6 +105,12 @@ public class Game {
         }
     }
 
+    /**
+     * This method allows a character to equip an object
+     *
+     * @param character is the character finding the object
+     * @param offensiveEquipment is the offensive object found
+     */
     private void findEquipment (Character character, OffensiveEquipment offensiveEquipment) {
         try {
             character.setOffensiveEquipment(offensiveEquipment);
