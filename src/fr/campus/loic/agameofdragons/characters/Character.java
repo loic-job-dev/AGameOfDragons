@@ -5,7 +5,7 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 /**
  * This class represent the character that the player will play with.
  */
-public class Character {
+public abstract class Character {
     protected String name;
     protected int attack;
     protected int life;

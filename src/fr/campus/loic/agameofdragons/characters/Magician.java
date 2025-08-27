@@ -1,8 +1,14 @@
 package fr.campus.loic.agameofdragons.characters;
 
+import fr.campus.loic.agameofdragons.equipment.Potion;
+import fr.campus.loic.agameofdragons.equipment.Spell;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 public class Magician extends Character {
+
+    protected Spell spell;
+    protected Potion potion;
+
     /**
      * The constructor of the class that sets some parameters
      *
