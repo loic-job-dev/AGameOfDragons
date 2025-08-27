@@ -1,6 +1,8 @@
 package fr.campus.loic.agameofdragons;
 
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.equipment.DefensiveEquipment;
+import fr.campus.loic.agameofdragons.equipment.OffensiveEquipment;
 import fr.campus.loic.agameofdragons.equipment.Potion;
 import fr.campus.loic.agameofdragons.equipment.Weapon;
 import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
@@ -65,23 +67,14 @@ public class Game {
 
         //Attribution test for a weapon to a warrior :
         Weapon massue = new Weapon("massue", 3);
-        try {
-            character.setOffensiveEquipment(massue);
-            menu.displayMessage("Tu t'équipes d'un(e) " + massue.getName());
-            menu.displayMessage(character.toString());
-        } catch (WrongEquipmentException e) {
-            menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
-        }
+        findEquipment(character, massue);
 
         //Attribution test for a potion to a magician :
         Potion philtre = new Potion("Peau de pierre", 3);
-        try {
-            character.setDefensiveEquipment(philtre);
-            menu.displayMessage("Tu t'équipes d'un(e) " + philtre.getName());
-            menu.displayMessage(character.toString());
-        } catch (WrongEquipmentException e) {
-            menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
-        }
+        findEquipment(character, philtre);
+
+        //Display the equipment of the character
+        menu.displayMessage(character.toString());
 
         while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
             try {
@@ -94,6 +87,24 @@ public class Game {
         if (character.getPosition() == board.getNumTiles()) {
             menu.displayMessage(ConsoleColors.BOLD_GREEN + "Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
             menu.setGameClosed(true);
+        }
+    }
+
+    private void findEquipment (Character character, DefensiveEquipment defensiveEquipment) {
+        try {
+            character.setDefensiveEquipment(defensiveEquipment);
+            menu.displayMessage(ConsoleColors.BOLD_GREEN + "\nTu t'équipes d'un(e) " + defensiveEquipment.getName() + ".\n");
+        } catch (WrongEquipmentException e) {
+            menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
+        }
+    }
+
+    private void findEquipment (Character character, OffensiveEquipment offensiveEquipment) {
+        try {
+            character.setOffensiveEquipment(offensiveEquipment);
+            menu.displayMessage(ConsoleColors.BOLD_GREEN + "\nTu t'équipes d'un(e) " + offensiveEquipment.getName() + ".\n");
+        } catch (WrongEquipmentException e) {
+            menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
         }
     }
 }

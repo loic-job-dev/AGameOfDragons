@@ -68,7 +68,7 @@ public abstract class Character {
     }
     public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) throws WrongEquipmentException {
         if (!this.type.equals(offensiveEquipment.getOwner())) {
-            throw new WrongEquipmentException("Tu as trouvé un " + offensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !");
+            throw new WrongEquipmentException("\nTu as trouvé un(e) " + offensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !");
         }
         this.offensiveEquipment = offensiveEquipment;
     }
@@ -78,7 +78,7 @@ public abstract class Character {
     }
     public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) throws WrongEquipmentException {
         if (!this.type.equals(defensiveEquipment.getOwner())) {
-            throw new WrongEquipmentException("Tu as trouvé un(e) " + defensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !");
+            throw new WrongEquipmentException("\nTu as trouvé un(e) " + defensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !\n");
         }
         this.defensiveEquipment = defensiveEquipment;
     }
@@ -90,10 +90,10 @@ public abstract class Character {
         sb.append(String.format(ConsoleColors.PURPLE + """
         Le personnage %s est un %s.
         Il possède %d points de vie.
-        Il peut s'équiper de %s.
+        Il peut s'équiper de : "%s" et de : "%s".
         Son attaque actuelle est de %d
         Sur le plateau, il se trouve à la case %d.
-        """, this.name, this.type, this.life, this.offensiveEquipmentType, this.attack, this.position));
+        """, this.name, this.type, this.life, this.offensiveEquipmentType, this.defensiveEquipmentType, this.attack, this.position));
 
         if (this.offensiveEquipment != null) {
             sb.append("Il est équipé de : ").append(this.offensiveEquipment.toString()).append("\n");

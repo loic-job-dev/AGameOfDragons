@@ -3,14 +3,11 @@ package fr.campus.loic.agameofdragons;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import fr.campus.loic.agameofdragons.characters.*;
 import fr.campus.loic.agameofdragons.characters.Character;
-import fr.campus.loic.agameofdragons.characters.Magician;
-import fr.campus.loic.agameofdragons.characters.Warrior;
 import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
-import fr.campus.loic.agameofdragons.material.Board;
-import fr.campus.loic.agameofdragons.material.Dice;
-import fr.campus.loic.agameofdragons.tools.ConsoleColors;
-import fr.campus.loic.agameofdragons.tools.GameLogger;
+import fr.campus.loic.agameofdragons.material.*;
+import fr.campus.loic.agameofdragons.tools.*;
 
 /**
  * This class implements all the methods to allow the player to read instructions and give his choices
@@ -98,7 +95,6 @@ public class Menu {
         } else {
             character = new Magician(name);
         }
-        displayMessage(character.toString());
         return character;
     }
 
@@ -194,7 +190,7 @@ public class Menu {
                 int diceNumber = dice.rollDice();
                 displayMessage(ConsoleColors.PURPLE + "\nLe dé affiche " + diceNumber + ".");
                 if (character.getPosition() + diceNumber > board.getNumTiles()) {
-                    throw new PersonnageHorsPlateauException("Le personnage " + character.getName() + " a dépassé la dernière case du plateau !");
+                    throw new PersonnageHorsPlateauException(ConsoleColors.BOLD_GREEN + character.getName() + " a dépassé la dernière case du plateau !\n");
                 }
                 character.setPosition(character.getPosition() + diceNumber);
                 //If the character goes too far :

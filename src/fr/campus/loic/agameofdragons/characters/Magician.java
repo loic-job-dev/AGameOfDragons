@@ -22,7 +22,7 @@ public class Magician extends Character {
         this.type = "magicien";
         this.attack = 8;
         this.life = 6;
-        this.offensiveEquipmentType = "sort";
-        this.defensiveEquipmentType = "philtre";
+        this.offensiveEquipmentType = "sorts";
+        this.defensiveEquipmentType = "philtres";
     }
 }
