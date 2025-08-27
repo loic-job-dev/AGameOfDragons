@@ -1,4 +1,15 @@
 package fr.campus.loic.agameofdragons.equipment;
 
-public class Shield {
+public class Shield extends DefensiveEquipment{
+    /**
+     * The constructor of the class that sets some parameters
+     *
+     * @param name is the name of the equipment
+     * @param defenseBuff represents the value of the bonus it gives to the owner
+     */
+    public Shield(String name, int defenseBuff) {
+        super(name);
+        this.owner = "guerrier";
+        this.defenseBuff = defenseBuff;
+    }
 }

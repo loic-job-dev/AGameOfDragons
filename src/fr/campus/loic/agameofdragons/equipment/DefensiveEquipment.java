@@ -3,26 +3,22 @@ package fr.campus.loic.agameofdragons.equipment;
 /**
  * This class represent defensive equipment that can be given to a character
  */
-public class DefensiveEquipment {
-    private final String type;
-    private final String name;
-    private final int defenseBuff;
+public abstract class DefensiveEquipment {
+    protected String owner;
+    protected String name;
+    protected int defenseBuff;
 
     /**
      * The constructor of the class that sets some parameters
      *
-     * @param type is the type of defensive equipment
      * @param name is the name of the equipment
-     * @param defenseBuff represents the value of the bonus it gives to the owner
      */
-    public DefensiveEquipment (String type, String name, int defenseBuff){
-        this.type = type;
+    public DefensiveEquipment (String name){
         this.name = name;
-        this.defenseBuff = defenseBuff;
     }
 
     public String getType(){
-        return this.type;
+        return this.owner;
     }
 
     public String getName(){
@@ -35,6 +31,6 @@ public class DefensiveEquipment {
 
     @Override
     public String toString() {
-        return "Cet équipement de type " + type + " nommé " + name + " booste la défense de " + defenseBuff + " points.";
+        return "Cet équipement réservé au " + owner + " nommé " + name + " booste la défense de " + defenseBuff + " points.";
     }
 }
