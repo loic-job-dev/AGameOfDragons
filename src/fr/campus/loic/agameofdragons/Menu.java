@@ -4,6 +4,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.characters.Magician;
+import fr.campus.loic.agameofdragons.characters.Warrior;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
@@ -79,23 +81,23 @@ public class Menu {
             if (type.equals("Guerrier") || type.equals("Mage")) {
                 typeIsValid = true;
                 if (type.equals("Guerrier")) {
-                    characterType = "Warrior";
+                    characterType = "warrior";
                 } else {
-                    characterType =  "Magician";
+                    characterType =  "magician";
                 }
             } else {
                 displayMessage (ConsoleColors.BOLD_RED + "\nMerci saisir \"Guerrier\" ou \"Mage\" uniquement !\n");
             }
         }
-        displayMessage(ConsoleColors.PURPLE + "\nTon personnage sera de la classe " + characterType + ".\n");
 
         //Creation of the character
         Character character;
-        if (characterType.equals("Warrior")) {
-            character = new Character("Warrior", name, 10, 5, "Shield");
+        if (characterType.equals("warrior")) {
+            character = new Warrior(name);
         } else {
-            character = new Character("Magician", name, 6, 8, "Potion");
+            character = new Magician(name);
         }
+        displayMessage(character.toString());
         return character;
     }
 

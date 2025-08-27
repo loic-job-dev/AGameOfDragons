@@ -6,14 +6,14 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
  * This class represent the character that the player will play with.
  */
 public class Character {
-    private String name;
-    private int attack;
-    private int life;
-    private int position;
-    private final String offensiveEquipmentType;
+    protected String name;
+    protected int attack;
+    protected int life;
+    protected int position;
+    protected String offensiveEquipmentType;
 
-    //For the beginning :
-    private final String type;
+    //To display the class name in french :
+    protected String type;
 
     //For the next steps :
     //private Equipment.OffensiveEquipment;
@@ -21,18 +21,10 @@ public class Character {
     /**
      * The constructor of the class that sets some parameters
      *
-     * @param type is the type of the character
      * @param name is the name of the character
-     * @param life represents the lifepoints of the character
-     * @param attack represents the value of the attack, the strenght, of the character
-     * @param offensiveEquipmentType gives an indication of the equipement that the character can equip, depending on the type.
      */
-    public Character(String type, String name, int life, int attack, String offensiveEquipmentType){
-        this.type = type;
+    public Character(String name){
         this.name = name;
-        this.life = life;
-        this.attack = attack;
-        this.offensiveEquipmentType = offensiveEquipmentType;
         this.position = 0;
     }
 
@@ -78,8 +70,9 @@ public class Character {
         Le personnage %s est un %s.
         Il possède %d points de vie.
         Il peut s'équiper de %s.
+        Son attaque actuelle est de %d
         Sur le plateau, il se trouve à la case %d.
-        """, this.name, this.type, this.life, this.offensiveEquipmentType, this.position);
+        """, this.name, this.type, this.life, this.offensiveEquipmentType, this.attack, this.position);
     }
 
 }
