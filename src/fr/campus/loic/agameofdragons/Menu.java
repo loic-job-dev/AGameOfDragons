@@ -6,6 +6,7 @@ import java.util.Scanner;
 import fr.campus.loic.agameofdragons.characters.Character;
 import fr.campus.loic.agameofdragons.characters.Magician;
 import fr.campus.loic.agameofdragons.characters.Warrior;
+import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
@@ -45,7 +46,7 @@ public class Menu {
      *
      * @param message is the message displayed
      */
-    protected void displayMessage(String message){
+    public void displayMessage(String message){
         GameLogger.LOGGER.info(message  + ConsoleColors.RESET);
     }
 
@@ -176,7 +177,7 @@ public class Menu {
      * @param board is the board created, with a defined number of tiles.
      * @param dice is the dice created for the game, with a defined number of faces.
      */
-    protected void playerTurn(Character character, Board board, Dice dice) {
+    protected void playerTurn(Character character, Board board, Dice dice) throws PersonnageHorsPlateauException {
         displayMessage(ConsoleColors.CYAN + "le personnage est en position " + character.getPosition() + ".\n");
         displayMessage(ConsoleColors.CYAN + "Que veux-tu faire ?\n" +
                 "1- Lancer le dé.\n" +
@@ -192,10 +193,14 @@ public class Menu {
                 displayMessage(ConsoleColors.YELLOW + "Le dé est lancé...");
                 int diceNumber = dice.rollDice();
                 displayMessage(ConsoleColors.PURPLE + "\nLe dé affiche " + diceNumber + ".");
-                character.setPosition(character.getPosition() + diceNumber);
-                if (character.getPosition() > board.getNumTiles()) {
-                    character.setPosition(board.getNumTiles());
+                if (character.getPosition() + diceNumber > board.getNumTiles()) {
+                    throw new PersonnageHorsPlateauException("Le personnage " + character.getName() + " a dépassé la dernière case du plateau !");
                 }
+                character.setPosition(character.getPosition() + diceNumber);
+                //If the character goes too far :
+                //if (character.getPosition() > board.getNumTiles()) {
+                //    character.setPosition(board.getNumTiles());
+                //}
             }
 
             else if (choice == 2) {

@@ -3,6 +3,7 @@ package fr.campus.loic.agameofdragons;
 import fr.campus.loic.agameofdragons.characters.Character;
 import fr.campus.loic.agameofdragons.equipment.Potion;
 import fr.campus.loic.agameofdragons.equipment.Weapon;
+import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
@@ -58,7 +59,7 @@ public class Game {
      * @param board is the board created, with a defined number of tiles.
      * @param dice is the dice created for the game, with a defined number of faces.
      */
-    private void startGame(Character character, Board board, Dice dice){
+    private void startGame(Character character, Board board, Dice dice) {
         menu.displayMessage(ConsoleColors.RED + "Début de la partie !");
 
         //Attribution test for a weapon to a warrior :
@@ -72,7 +73,12 @@ public class Game {
         menu.displayMessage(character.toString());
 
         while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
-            menu.playerTurn(character, board, dice);
+            try {
+                menu.playerTurn(character, board, dice);
+            } catch (PersonnageHorsPlateauException e) {
+                menu.displayMessage(ConsoleColors.RED + e.getMessage());
+                character.setPosition(board.getNumTiles());
+            }
         }
         if (character.getPosition() == board.getNumTiles()) {
             menu.displayMessage(ConsoleColors.BOLD_GREEN + "Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
