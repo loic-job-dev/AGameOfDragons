@@ -25,13 +25,15 @@ public class Board {
         Cell cell2 = new OffensiveBonusCell(new Spell("flamèche", 2));
         Cell cell3 = new EnnemyCell();
 
+        //Initialize a board with empty tiles
         for (int i = 0; i < numTiles; i++) {
             tiles.add(new EmptyCell());
         }
 
-        tiles.add(1, cell1);
-        tiles.add(2, cell2);
-        tiles.add(3, cell3);
+        //Modify the empty iles to specific tiles
+        tiles.set(1, cell1);
+        tiles.set(2, cell2);
+        tiles.set(3, cell3);
     }
 
     public int getNumTiles(){

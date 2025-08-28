@@ -36,6 +36,8 @@ public class OffensiveBonusCell extends Cell {
                 menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
             }
             isAlreadyVisited = true;
+        } else {
+            menu.displayMessage(ConsoleColors.BLUE + "Equipement déjà récupéré...\n");
         }
     }
     
