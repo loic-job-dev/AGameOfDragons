@@ -43,6 +43,6 @@ public class OffensiveBonusCell extends Cell {
     
     @Override
     public String toString() {
-        return "Case bonus offensif !";
+        return "Case bonus offensif qui contient " + this.offensiveEquipment.toString() + " !";
     }
 }

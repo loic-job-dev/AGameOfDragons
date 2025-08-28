@@ -25,8 +25,8 @@ public class Game {
      */
     public Game() {
         this.menu = new Menu();
-        this.dice = new Dice(1);
-        this.board = new Board(4);
+        this.dice = new Dice(6);
+        this.board = new Board(64);
     }
 
     /**
