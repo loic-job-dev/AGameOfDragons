@@ -21,7 +21,9 @@ public class Warrior extends Character {
         this.attack = 5;
         this.life = 10;
         this.offensiveEquipmentType = "armes";
+        this.offensiveEquipment = new Weapon("Epée de base", 0);
         this.defensiveEquipmentType = "boucliers";
+        this.defensiveEquipment = new Shield("bouclier de base", 0);
     }
 }
 

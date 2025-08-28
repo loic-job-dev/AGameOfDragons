@@ -23,6 +23,8 @@ public class Magician extends Character {
         this.attack = 8;
         this.life = 6;
         this.offensiveEquipmentType = "sorts";
+        this.offensiveEquipment = new Spell("sort basique", 0);
         this.defensiveEquipmentType = "philtres";
+        this.defensiveEquipment = new Potion("philtre fade", 0);
     }
 }

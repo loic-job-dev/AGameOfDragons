@@ -25,8 +25,8 @@ public class Game {
      */
     public Game() {
         this.menu = new Menu();
-        this.dice = new Dice(6);
-        this.board = new Board(64);
+        this.dice = new Dice(1);
+        this.board = new Board(4);
     }
 
     /**
@@ -65,58 +65,22 @@ public class Game {
     private void startGame(Character character, Board board, Dice dice) {
         menu.displayMessage(ConsoleColors.RED + "Début de la partie !");
 
-        //Attribution test for a weapon to a warrior :
-        Weapon massue = new Weapon("massue", 3);
-        findEquipment(character, massue);
-
-        //Attribution test for a potion to a magician :
-        Potion philtre = new Potion("Peau de pierre", 3);
-        findEquipment(character, philtre);
-
-        //Display the equipment of the character
-        menu.displayMessage(character.toString());
-
+        //Loop where the player plays
         while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
             try {
                 menu.playerTurn(character, board, dice);
+                menu.displayMessage(board.getTiles().get(character.getPosition()).toString());
+                board.getTiles().get(character.getPosition()).action(character, menu);
             } catch (PersonnageHorsPlateauException e) {
                 menu.displayMessage(ConsoleColors.RED + e.getMessage());
                 character.setPosition(board.getNumTiles());
             }
         }
+
+        //Victory condition
         if (character.getPosition() == board.getNumTiles()) {
             menu.displayMessage(ConsoleColors.BOLD_GREEN + "Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
             menu.setGameClosed(true);
-        }
-    }
-
-    /**
-     * This method allows a character to equip an object
-     *
-     * @param character is the character finding the object
-     * @param defensiveEquipment is the defensive object found
-     */
-    private void findEquipment (Character character, DefensiveEquipment defensiveEquipment) {
-        try {
-            character.setDefensiveEquipment(defensiveEquipment);
-            menu.displayMessage(ConsoleColors.BOLD_GREEN + "\nTu t'équipes d'un(e) " + defensiveEquipment.getName() + ".\n");
-        } catch (WrongEquipmentException e) {
-            menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
-        }
-    }
-
-    /**
-     * This method allows a character to equip an object
-     *
-     * @param character is the character finding the object
-     * @param offensiveEquipment is the offensive object found
-     */
-    private void findEquipment (Character character, OffensiveEquipment offensiveEquipment) {
-        try {
-            character.setOffensiveEquipment(offensiveEquipment);
-            menu.displayMessage(ConsoleColors.BOLD_GREEN + "\nTu t'équipes d'un(e) " + offensiveEquipment.getName() + ".\n");
-        } catch (WrongEquipmentException e) {
-            menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
         }
     }
 }

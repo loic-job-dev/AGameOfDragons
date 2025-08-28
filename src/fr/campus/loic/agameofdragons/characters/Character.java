@@ -66,21 +66,38 @@ public abstract class Character {
     public String getOffensiveEquipmentType(){
         return offensiveEquipmentType;
     }
+    public OffensiveEquipment getOffensiveEquipment() {
+        return this.offensiveEquipment;
+    }
     public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) throws WrongEquipmentException {
         if (!this.type.equals(offensiveEquipment.getOwner())) {
             throw new WrongEquipmentException("\nTu as trouvé un(e) " + offensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !");
         }
-        this.offensiveEquipment = offensiveEquipment;
+        //Equipment if better bonus
+        int newAttack = this.attack + offensiveEquipment.getAttackBuff();
+        if (newAttack > this.attack) {
+            this.offensiveEquipment = offensiveEquipment;
+            this.attack = newAttack;
+        }
     }
 
     public String getDefensiveEquipmentType(){
         return defensiveEquipmentType;
     }
+    public DefensiveEquipment getDefensiveEquipment(){
+        return this.defensiveEquipment;
+    }
     public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) throws WrongEquipmentException {
         if (!this.type.equals(defensiveEquipment.getOwner())) {
             throw new WrongEquipmentException("\nTu as trouvé un(e) " + defensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !\n");
         }
-        this.defensiveEquipment = defensiveEquipment;
+        //Equipment if better bonus
+        if (defensiveEquipment != null) {
+            this.defensiveEquipment = defensiveEquipment;
+        }
+        else if (defensiveEquipment.getDefenseBuff() > this.defensiveEquipment.getDefenseBuff()) {
+            this.defensiveEquipment = defensiveEquipment;
+        }
     }
 
     @Override
@@ -88,7 +105,7 @@ public abstract class Character {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format(ConsoleColors.PURPLE + """
-        Le personnage %s est un %s.
+        \nLe personnage %s est un %s.
         Il possède %d points de vie.
         Il peut s'équiper de : "%s" et de : "%s".
         Son attaque actuelle est de %d

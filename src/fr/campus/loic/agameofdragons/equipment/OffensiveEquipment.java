@@ -31,6 +31,6 @@ public abstract class OffensiveEquipment {
 
     @Override
     public String toString() {
-        return this.name + ", réservée au " + this.owner + ", et qui booste l'attaque de " + this.attackBuff + " points.";
+        return this.name + ", réservée au " + this.owner + ", qui booste l'attaque de " + this.attackBuff + " points.";
     }
 }

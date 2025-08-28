@@ -31,6 +31,6 @@ public abstract class DefensiveEquipment {
 
     @Override
     public String toString() {
-        return this.name + ", réservée au " + this.owner + ", et qui booste la défense de " + defenseBuff + " points.";
+        return this.name + ", réservée au " + this.owner + ", qui booste la défense de " + defenseBuff + " points.";
     }
 }
