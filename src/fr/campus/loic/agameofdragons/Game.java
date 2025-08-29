@@ -21,6 +21,7 @@ public class Game {
     public Game() {
         this.menu = new Menu();
         this.dice = new Dice(6);
+        //numTiles minimal to avoid errors with the random tiles : 14 with 6 weapons and 3 enemies
         this.board = new Board(64);
     }
 

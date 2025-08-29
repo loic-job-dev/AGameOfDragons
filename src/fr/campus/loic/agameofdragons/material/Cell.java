@@ -24,9 +24,7 @@ public abstract class Cell {
      * @param character is the character of the player
      * @param menu is the menu created to display messages
      */
-    public void action (Character character, Menu menu){
-
-    }
+    abstract public void action (Character character, Menu menu);
 
     @Override
     public String toString() {
