@@ -6,6 +6,9 @@ import fr.campus.loic.agameofdragons.equipment.OffensiveEquipment;
 import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
+/**
+ * This class represents a tile where an offensive equipment can be found
+ */
 public class OffensiveBonusCell extends Cell {
     protected OffensiveEquipment offensiveEquipment;
 
@@ -15,7 +18,7 @@ public class OffensiveBonusCell extends Cell {
     }
 
     /**
-     * This method allows a character to equip an object
+     * This method allows a character to equip an offensive bonus if possible
      *
      * @param character is the character finding the object
      * @param menu is the menu that displays the information
@@ -43,6 +46,6 @@ public class OffensiveBonusCell extends Cell {
     
     @Override
     public String toString() {
-        return "Case bonus offensif qui contient " + this.offensiveEquipment.toString() + " !";
+        return ConsoleColors.BOLD_GREEN + "Case bonus offensif qui contient " + this.offensiveEquipment.toString() + " !";
     }
 }

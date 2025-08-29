@@ -1,5 +1,6 @@
 package fr.campus.loic.agameofdragons.material;
 
+import fr.campus.loic.agameofdragons.equipment.Potion;
 import fr.campus.loic.agameofdragons.equipment.Shield;
 import fr.campus.loic.agameofdragons.equipment.Spell;
 import fr.campus.loic.agameofdragons.equipment.Weapon;
@@ -15,7 +16,7 @@ public class Board {
 
 
     /**
-     * The constructor sets a number of tiles, and adds specific tiles.
+     * The constructor sets a number of tiles, and adds specific tiles (bonuses and enemies).
      *
      * @param numTiles is the value of the last tile
      */

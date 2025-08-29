@@ -6,6 +6,9 @@ import fr.campus.loic.agameofdragons.equipment.DefensiveEquipment;
 import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
+/**
+ * This class represents a tile where a defensive equipment can be found
+ */
 public class DefensiveBonusCell extends Cell{
     protected DefensiveEquipment defensiveEquipment;
 
@@ -15,7 +18,7 @@ public class DefensiveBonusCell extends Cell{
     }
 
     /**
-     * This method allows a character to equip an object
+     * This method allows a character to equip a defensive bonus if possible
      *
      * @param character is the character finding the object
      * @param menu is the menu that displays the information
@@ -42,6 +45,6 @@ public class DefensiveBonusCell extends Cell{
 
     @Override
     public String toString() {
-        return "Case bonus défensif !";
+        return ConsoleColors.BOLD_GREEN + "Case bonus défensif qui contient " + this.defensiveEquipment.toString() + " !";
     }
 }
