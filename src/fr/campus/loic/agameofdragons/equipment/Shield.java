@@ -1,5 +1,8 @@
 package fr.campus.loic.agameofdragons.equipment;
 
+/**
+ * This class is the defensive equipment dedicated to the warrior
+ */
 public class Shield extends DefensiveEquipment{
     /**
      * The constructor of the class that sets some parameters

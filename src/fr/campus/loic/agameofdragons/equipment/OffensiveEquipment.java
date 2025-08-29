@@ -9,7 +9,7 @@ public abstract class OffensiveEquipment {
     protected int attackBuff;
 
     /**
-     * The constructor of the class that sets some parameters
+     * The constructor of the class that sets the name of the object
      *
      * @param name is the name of the equipment
      */
