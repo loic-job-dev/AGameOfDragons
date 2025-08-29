@@ -1,12 +1,7 @@
 package fr.campus.loic.agameofdragons;
 
 import fr.campus.loic.agameofdragons.characters.Character;
-import fr.campus.loic.agameofdragons.equipment.DefensiveEquipment;
-import fr.campus.loic.agameofdragons.equipment.OffensiveEquipment;
-import fr.campus.loic.agameofdragons.equipment.Potion;
-import fr.campus.loic.agameofdragons.equipment.Weapon;
 import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
-import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
@@ -30,8 +25,8 @@ public class Game {
     }
 
     /**
-     * This method is called at the beginning of the game, when the player hasn't a character yet.
-     * It calls the method to create a character, and then the method to play the game
+     * Initializes the game when no character has been created yet.
+     * It creates the player character and then starts the game loop.
      */
     public void launchGame(){
 
@@ -56,11 +51,11 @@ public class Game {
     }
 
     /**
-     * This method is the game itself : it allows the player to play his turn until the end of the game.
+     * Runs the main game loop, allowing the player to take turns until the game ends.
      *
-     * @param character is the Character created by the player at the beginning
-     * @param board is the board created, with a defined number of tiles.
-     * @param dice is the dice created for the game, with a defined number of faces.
+     * @param character The player character created at the beginning of the game.
+     * @param board The game board with a defined number of tiles.
+     * @param dice The dice used in the game, with a defined number of faces.
      */
     private void startGame(Character character, Board board, Dice dice) {
         menu.displayMessage(ConsoleColors.RED + "Début de la partie !");

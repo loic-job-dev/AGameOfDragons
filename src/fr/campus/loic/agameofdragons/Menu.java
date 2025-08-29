@@ -39,18 +39,19 @@ public class Menu {
     }
 
     /**
-     * This method calls the {@link GameLogger#LOGGER} logger.
+     * Logs a message to the console using {@link GameLogger#LOGGER},
+     * with colors reset after the message.
      *
-     * @param message is the message displayed
+     * @param message The message to display.
      */
     public void displayMessage(String message){
         GameLogger.LOGGER.info(message  + ConsoleColors.RESET);
     }
 
     /**
-     * This method allows the user to set a type of Character and a name for the character he wants to play with.
+     * Creates a character by asking the user to choose a type and a name.
      *
-     * @return It returns the Character
+     * @return The created character.
      */
     protected Character createCharacter(){
         String type;
@@ -99,10 +100,10 @@ public class Menu {
     }
 
     /**
-     * This method is the main menu of the game; it offers the user choices (display information about the character,
-     * rename the character, and begin, pause, or leave the game).
+     * Displays the main menu of the game, allowing the player to manage the character
+     * and control the game (view information, rename, start, pause, or exit).
      *
-     * @param character is the character created at the beginning.
+     * @param character The player's character.
      */
     protected void principal(Character character) {
 
@@ -167,11 +168,11 @@ public class Menu {
     }
 
     /**
-     * This method allows the player to make choices during his turn : launch the dice, or set the game in pause.
+     * Executes a player's turn, giving them the option to roll the dice or pause the game.
      *
-     * @param character is the Character created by the player at the beginning
-     * @param board is the board created, with a defined number of tiles.
-     * @param dice is the dice created for the game, with a defined number of faces.
+     * @param character The player's character.
+     * @param board The game board with its tiles.
+     * @param dice The dice used to determine moves.
      */
     protected void playerTurn(Character character, Board board, Dice dice) throws PersonnageHorsPlateauException {
         displayMessage(ConsoleColors.CYAN + "le personnage est en position " + character.getPosition() + ".\n");
