@@ -5,7 +5,7 @@ import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 /**
- * This class represent the character that the player will play with.
+ * This class represent the base of a character that the player will play with.
  */
 public abstract class Character {
     protected String name;
@@ -22,7 +22,7 @@ public abstract class Character {
 
 
     /**
-     * The constructor of the class that sets some parameters
+     * The constructor of the class that sets the name of the character, determinate by the player
      *
      * @param name is the name of the character
      */
@@ -69,6 +69,13 @@ public abstract class Character {
     public OffensiveEquipment getOffensiveEquipment() {
         return this.offensiveEquipment;
     }
+
+    /**
+     * This method checks if a character is allowed to equip an offensive item, and assigns it if it is better than the current equipment
+     *
+      * @param offensiveEquipment is the equipment found by the player
+     * @throws WrongEquipmentException is the exception thrown if the character can't equip this kind of item
+     */
     public void setOffensiveEquipment(OffensiveEquipment offensiveEquipment) throws WrongEquipmentException {
         if (!this.type.equals(offensiveEquipment.getOwner())) {
             throw new WrongEquipmentException("\nTu as trouvé un(e) " + offensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !");
@@ -87,6 +94,13 @@ public abstract class Character {
     public DefensiveEquipment getDefensiveEquipment(){
         return this.defensiveEquipment;
     }
+
+    /**
+     * This method checks if a character is allowed to equip a defensive item, and assigns it if it is better than the current equipment
+     *
+     * @param defensiveEquipment is the equipment found by the player
+     * @throws WrongEquipmentException is the exception thrown if the character can't equip this kind of item
+     */
     public void setDefensiveEquipment(DefensiveEquipment defensiveEquipment) throws WrongEquipmentException {
         if (!this.type.equals(defensiveEquipment.getOwner())) {
             throw new WrongEquipmentException("\nTu as trouvé un(e) " + defensiveEquipment.getName() + ", mais cet équipement ne correspond pas à ton personnage, dommage !\n");
