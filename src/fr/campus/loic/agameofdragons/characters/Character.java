@@ -8,6 +8,7 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
  * This class represent the base of a character that the player will play with.
  */
 public abstract class Character {
+    protected int id;
     protected String name;
     protected int attack;
     protected int life;
@@ -114,6 +115,13 @@ public abstract class Character {
         }
     }
 
+    //Getter and setter for the Id Database
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return this.id;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

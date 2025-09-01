@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import fr.campus.loic.agameofdragons.characters.*;
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.db.DatabaseConnector;
 import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
 import fr.campus.loic.agameofdragons.material.*;
 import fr.campus.loic.agameofdragons.tools.*;
@@ -53,7 +54,7 @@ public class Menu {
      *
      * @return The created character.
      */
-    protected Character createCharacter(){
+    protected Character createCharacter(DatabaseConnector db){
         String type;
         String name = "error";
         String characterType = "error";
@@ -96,6 +97,7 @@ public class Menu {
         } else {
             character = new Magician(name);
         }
+        db.createHero(character);
         return character;
     }
 
@@ -105,7 +107,7 @@ public class Menu {
      *
      * @param character The player's character.
      */
-    protected void principal(Character character) {
+    protected void principal(Character character, DatabaseConnector db) {
 
         while (gamePaused && !gameClosed) {
             if (character.getPosition() == 0) {
@@ -120,6 +122,7 @@ public class Menu {
                         "1- Voir les statistiques de ton personnage.\n" +
                         "2- Modifier son nom.\n" +
                         ConsoleColors.GREEN + "3- Reprendre la partie.\n" +
+                        ConsoleColors.GREEN + "4- Sauvegarder le héros.\n" +
                         ConsoleColors.RED + "9- Quitter le jeu (lâcheur...)\n" + ConsoleColors.RESET +
                         ConsoleColors.YELLOW + "Tapper le chiffre correspondant au choix");
             }
@@ -151,13 +154,18 @@ public class Menu {
 
                 else if (choice == 3) {
                     this.gamePaused = false;
+
+                }
+
+                else if (character.getPosition() != 0 && choice == 4) {
+                    db.editHero(character);
+                    displayMessage(ConsoleColors.GREEN + "Héros sauvegardé.\n");
                 }
 
                 else if (choice == 9) {
                     displayMessage(ConsoleColors.BLUE + "\nAu revoir " + character.getName() + ", puisse le Valhala t'accueillir dans dans sa fête éternelle...\n");
                     this.gameClosed = true;
-                }
-                else {
+                } else {
                     displayMessage(ConsoleColors.BOLD_RED + "\nMerci de saisir un chiffre valide pour indiquer ton choix.\n");
                 }
             } catch (InputMismatchException e) {
@@ -174,7 +182,7 @@ public class Menu {
      * @param board The game board with its tiles.
      * @param dice The dice used to determine moves.
      */
-    protected void playerTurn(Character character, Board board, Dice dice) throws PersonnageHorsPlateauException {
+    protected void playerTurn(Character character, Board board, Dice dice, DatabaseConnector db) throws PersonnageHorsPlateauException {
         displayMessage(ConsoleColors.CYAN + "le personnage est en position " + character.getPosition() + ".\n");
         displayMessage(ConsoleColors.CYAN + "Que veux-tu faire ?\n" +
                 "1- Lancer le dé.\n" +
@@ -194,16 +202,12 @@ public class Menu {
                     throw new PersonnageHorsPlateauException(ConsoleColors.BOLD_GREEN + character.getName() + " a dépassé la dernière case du plateau !\n");
                 }
                 character.setPosition(character.getPosition() + diceNumber);
-                //If the character goes too far :
-                //if (character.getPosition() > board.getNumTiles()) {
-                //    character.setPosition(board.getNumTiles());
-                //}
             }
 
             else if (choice == 2) {
                 this.gamePaused = true;
                 this.gameClosed = false;
-                principal(character);
+                principal(character, db);
             }
 
             else {

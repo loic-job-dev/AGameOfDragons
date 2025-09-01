@@ -1,6 +1,7 @@
 package fr.campus.loic.agameofdragons;
 
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.db.DatabaseConnector;
 import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.material.Board;
@@ -14,6 +15,7 @@ public class Game {
     Menu menu;
     Dice dice;
     Board board;
+    DatabaseConnector db;
 
     /**
      * The constructor sets a menu, a dice with 6 faces and a board with 64 tiles.
@@ -23,6 +25,7 @@ public class Game {
         this.dice = new Dice(6);
         //numTiles minimal to avoid errors with the random tiles : 14 with 6 weapons and 3 enemies
         this.board = new Board(64);
+        this.db = new DatabaseConnector();
     }
 
     /**
@@ -34,13 +37,13 @@ public class Game {
         menu.displayMessage(ConsoleColors.CYAN + "Bonjour à toi, nouveau joueur.\n" +
                 ConsoleColors.YELLOW + "Commence par créer ton personnage.\n");
 
-        Character player =  menu.createCharacter();
+        Character player =  menu.createCharacter(db);
 
         menu.displayMessage(ConsoleColors.CYAN + "Bienvenue sur A Game Of Dragons, " + player.getName() + " !\n" +
                 ConsoleColors.RED + "Prêt à souffrir ?\n");
 
 
-        menu.principal(player);
+        menu.principal(player, db);
 
         if (!menu.getGamePaused()){
             startGame(player, board, dice);
@@ -64,7 +67,7 @@ public class Game {
         //Loop where the player plays
         while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
             try {
-                menu.playerTurn(character, board, dice);
+                menu.playerTurn(character, board, dice, db);
                 menu.displayMessage(board.getTiles().get(character.getPosition()).toString());
                 board.getTiles().get(character.getPosition()).action(character, menu);
             } catch (PersonnageHorsPlateauException e) {
