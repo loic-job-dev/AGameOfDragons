@@ -2,6 +2,7 @@ package fr.campus.loic.agameofdragons.material;
 
 import fr.campus.loic.agameofdragons.Menu;
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.equipment.DefensiveEquipment;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 /**
@@ -9,6 +10,7 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
  */
 public abstract class Cell {
 
+    protected int id;
     protected boolean isAlreadyVisited;
 
     /**
@@ -16,6 +18,23 @@ public abstract class Cell {
      */
     public Cell () {
         this.isAlreadyVisited = false;
+    }
+
+    public boolean getIsAlreadyVisited() {
+        return this.isAlreadyVisited;
+    }
+    public void setIsAlreadyVisited(boolean isAlreadyVisited) {
+        this.isAlreadyVisited = isAlreadyVisited;
+    }
+
+    public abstract Object getContent();
+
+    //Getter and setter for the Id Database
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return this.id;
     }
 
     /**
@@ -30,4 +49,6 @@ public abstract class Cell {
     public String toString() {
         return ConsoleColors.BLUE + "Case vide !";
     }
+
+
 }

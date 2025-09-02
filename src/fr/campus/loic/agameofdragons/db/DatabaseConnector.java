@@ -1,13 +1,17 @@
 package fr.campus.loic.agameofdragons.db;
 
 import com.google.gson.Gson;
-import com.mysql.cj.jdbc.JdbcStatement;
 import fr.campus.loic.agameofdragons.Menu;
 import fr.campus.loic.agameofdragons.characters.Character;
-import fr.campus.loic.agameofdragons.material.Board;
+import fr.campus.loic.agameofdragons.material.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Utility class that contains all the methods to interact with the database
+ */
 public class DatabaseConnector {
 
     Connection conn = null;
@@ -16,6 +20,9 @@ public class DatabaseConnector {
     ResultSet rs = null;
     Menu menu = new Menu();
 
+    /**
+     * Displays on the console all the characters saved in the database
+     */
     public void getHeroes() {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
@@ -70,6 +77,11 @@ public class DatabaseConnector {
         }
     }
 
+    /**
+     * Saves in the databse the character newly created. It also sets an unique ID from the database Id to avoid problems if multiple characters share the same name
+     *
+     * @param character is the character created
+     */
     public void createHero(Character character) {
 
         String sql = "INSERT INTO `Characters` " + "(name, attack, life, position, offensiveEquipment, DefensiveEquipment, type, offensiveEquipmentType, defensiveEquipmentType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -102,7 +114,6 @@ public class DatabaseConnector {
                     if (generatedKeys.next()) {
                         int generatedId = generatedKeys.getInt(1);
                         character.setId(generatedId);
-                        System.out.println("Héro sauvé en base de donnée avec l'Id : " + generatedId);
                     }
                 }
             }
@@ -115,6 +126,11 @@ public class DatabaseConnector {
         }
     }
 
+    /**
+     * Saves the attributes of the character (like his life points, his position, his equipment) in the database. The old values are erased.
+     *
+     * @param character is the character played with
+     */
     public void editHero (Character character) {
 
         String sql = "UPDATE `Characters` " +
@@ -160,6 +176,11 @@ public class DatabaseConnector {
         }
     }
 
+    /**
+     * Saved the value of the attribute "life". The old value is erased.
+     *
+     * @param character is the character played with
+     */
     public void changeLifePoints(Character character) {
         String sql = "UPDATE `Characters` " +
                 "SET life = ?" +
@@ -183,7 +204,86 @@ public class DatabaseConnector {
         }
     }
 
-    public void saveBoard(Board board) {
+    /**
+     * Saves the board in the database. All the tiles are saved one by one, in the same order as they are listed.
+     *
+     * @param board is the board generated at the beginning of the game
+     */
+    public void createBoard(Board board) {
 
+        String sql = "INSERT INTO Board " + "(numTiles) VALUES (?)";
+        int boardId = 0;
+
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
+
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setInt(1, board.getNumTiles());
+
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int generatedId = generatedKeys.getInt(1);
+                        board.setId(generatedId);
+                        boardId = generatedId;
+                    }
+                }
+            }
+
+        }catch (SQLException ex){
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
+        // language=SQL
+        sql = "INSERT INTO Cell (board_id, `index`, isAlreadyVisited, type, defensiveEquipment, offensiveEquipment, enemy) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        Gson gson = new Gson();
+
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
+
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            List<Cell> cells = new ArrayList<>();
+            cells = board.getTiles();
+            int index = 0;
+
+            for (Cell cell : cells) {
+                pstmt.setInt(1, boardId);
+                pstmt.setInt(2, index);
+                pstmt.setBoolean(3, cell.getIsAlreadyVisited());
+                pstmt.setString(4, cell.getClass().getSimpleName());
+                if (cell instanceof DefensiveBonusCell) {
+                    String jsonDefensive = gson.toJson(cell.getContent());
+                    pstmt.setString(5, jsonDefensive);
+                } else {
+                    pstmt.setNull(5, java.sql.Types.VARCHAR);
+                }
+                if (cell instanceof OffensiveBonusCell) {
+                    String jsonOffensive = gson.toJson(cell.getContent());
+                    pstmt.setString(6, jsonOffensive);
+                } else {
+                    pstmt.setNull(6, java.sql.Types.VARCHAR);
+                }
+                if (cell instanceof EnemyCell) {
+                    pstmt.setString(7, "Enemy");
+                } else {
+                    pstmt.setNull(7, java.sql.Types.VARCHAR);
+                }
+                pstmt.executeUpdate();
+                index++;
+            }
+
+        }catch (SQLException ex){
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
     }
 }

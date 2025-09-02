@@ -13,6 +13,7 @@ import java.util.List;
  *This class represents the board where the character moves
  */
 public class Board {
+    private int id;
     private int numTiles;
     protected List<Cell> tiles;
 
@@ -35,5 +36,13 @@ public class Board {
 
     public List<Cell> getTiles() {
         return this.tiles;
+    }
+
+    //Getter and setter for the Id Database
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return this.id;
     }
 }

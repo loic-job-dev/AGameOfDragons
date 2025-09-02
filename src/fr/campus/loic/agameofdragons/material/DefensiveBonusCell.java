@@ -17,6 +17,11 @@ public class DefensiveBonusCell extends Cell{
         this.defensiveEquipment = defensiveEquipment;
     }
 
+    @Override
+    public DefensiveEquipment getContent() {
+        return this.defensiveEquipment;
+    }
+
     /**
      * This method allows a character to equip a defensive bonus if possible
      *

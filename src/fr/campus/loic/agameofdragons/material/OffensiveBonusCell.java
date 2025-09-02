@@ -2,6 +2,7 @@ package fr.campus.loic.agameofdragons.material;
 
 import fr.campus.loic.agameofdragons.Menu;
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.equipment.DefensiveEquipment;
 import fr.campus.loic.agameofdragons.equipment.OffensiveEquipment;
 import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
@@ -17,6 +18,9 @@ public class OffensiveBonusCell extends Cell {
         this.offensiveEquipment = offensiveEquipment;
     }
 
+    public OffensiveEquipment getContent() {
+        return this.offensiveEquipment;
+    }
     /**
      * This method allows a character to equip an offensive bonus if possible
      *

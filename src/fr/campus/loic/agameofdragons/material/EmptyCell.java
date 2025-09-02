@@ -12,4 +12,9 @@ public class EmptyCell extends Cell{
     public void action (Character character, Menu menu) {
 
     }
+
+    @Override
+    public Object getContent() {
+        return null;
+    }
 }

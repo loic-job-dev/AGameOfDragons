@@ -34,6 +34,8 @@ public class Game {
      */
     public void launchGame(){
 
+        db.createBoard(board);
+
         menu.displayMessage(ConsoleColors.CYAN + "Bonjour à toi, nouveau joueur.\n" +
                 ConsoleColors.YELLOW + "Commence par créer ton personnage.\n");
 
