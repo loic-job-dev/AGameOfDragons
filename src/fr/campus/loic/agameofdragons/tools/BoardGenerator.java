@@ -1,5 +1,9 @@
 package fr.campus.loic.agameofdragons.tools;
 
+import fr.campus.loic.agameofdragons.enemies.Dragon;
+import fr.campus.loic.agameofdragons.enemies.Enemy;
+import fr.campus.loic.agameofdragons.enemies.Gobelin;
+import fr.campus.loic.agameofdragons.enemies.Wizard;
 import fr.campus.loic.agameofdragons.equipment.Potion;
 import fr.campus.loic.agameofdragons.equipment.Shield;
 import fr.campus.loic.agameofdragons.equipment.Spell;
@@ -96,9 +100,17 @@ public class BoardGenerator {
             }
         }
         //Setting the enemies
+        placed = bonusTiles-1;
         for (int j = 0; j < enemyTiles; j++) {
             int index = indices.get(placed++);
-            tiles.set(index, new EnemyCell());
+            if (j<numEnemyTile) {
+                tiles.set(index, new EnemyCell(new Gobelin()));
+            } else if (j< 2 * numEnemyTile) {
+                tiles.set(index, new EnemyCell(new Wizard()));
+            } else if (j< 3 * numEnemyTile) {
+                tiles.set(index, new EnemyCell(new Dragon()));
+            }
+
         }
 
         return this.tiles;

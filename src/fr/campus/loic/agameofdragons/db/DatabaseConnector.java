@@ -16,7 +16,6 @@ public class DatabaseConnector {
 
     Connection conn = null;
     Statement stmt = null;
-
     ResultSet rs = null;
     Menu menu = new Menu();
 
@@ -271,7 +270,8 @@ public class DatabaseConnector {
                     pstmt.setNull(6, java.sql.Types.VARCHAR);
                 }
                 if (cell instanceof EnemyCell) {
-                    pstmt.setString(7, "Enemy");
+                    String jsonEnemy = gson.toJson(cell.getContent());
+                    pstmt.setString(7, jsonEnemy);
                 } else {
                     pstmt.setNull(7, java.sql.Types.VARCHAR);
                 }

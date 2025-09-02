@@ -1,0 +1,17 @@
+package fr.campus.loic.agameofdragons.enemies;
+
+/**
+ * represents a wizard that can be encountered on the board
+ */
+public class Wizard extends Enemy{
+
+    /**
+     * The constructor sets generic values for this enemy
+     */
+    public Wizard(){
+        super();
+        this.name = "sorcier";
+        this.attack = 2;
+        this.life = 9;
+    }
+}
