@@ -11,8 +11,6 @@ public class Spell extends OffensiveEquipment{
      * @param attackBuff represents the value of the bonus it gives to the owner
      */
     public Spell(String name, int attackBuff) {
-        super(name);
-        this.owner = "magicien";
-        this.attackBuff = attackBuff;
+        super(name, "magicien", attackBuff);
     }
 }

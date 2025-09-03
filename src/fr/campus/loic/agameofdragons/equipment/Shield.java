@@ -11,8 +11,6 @@ public class Shield extends DefensiveEquipment{
      * @param defenseBuff represents the value of the bonus it gives to the owner
      */
     public Shield(String name, int defenseBuff) {
-        super(name);
-        this.owner = "guerrier";
-        this.defenseBuff = defenseBuff;
+        super(name, "guerrier", defenseBuff);
     }
 }

@@ -4,8 +4,9 @@ package fr.campus.loic.agameofdragons.equipment;
  * This class represent offensive equipment that can be given to a character
  */
 public abstract class OffensiveEquipment {
-    protected String owner;
+
     protected String name;
+    protected String owner;
     protected int attackBuff;
 
     /**
@@ -13,8 +14,10 @@ public abstract class OffensiveEquipment {
      *
      * @param name is the name of the equipment
      */
-    public OffensiveEquipment (String name){
+    public OffensiveEquipment (String name, String owner, int attackBuff){
         this.name = name;
+        this.owner = owner;
+        this.attackBuff = attackBuff;
     }
 
     public String getOwner(){

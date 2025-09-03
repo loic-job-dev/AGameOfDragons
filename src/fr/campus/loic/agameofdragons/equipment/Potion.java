@@ -11,8 +11,6 @@ public class Potion extends DefensiveEquipment {
      * @param defenseBuff represents the value of the bonus it gives to the owner
      */
     public Potion(String name, int defenseBuff) {
-        super(name);
-        this.owner = "magicien";
-        this.defenseBuff = defenseBuff;
+        super(name, "magicien", defenseBuff);
     }
 }

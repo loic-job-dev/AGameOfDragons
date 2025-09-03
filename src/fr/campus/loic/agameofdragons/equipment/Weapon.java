@@ -11,8 +11,6 @@ public class Weapon extends OffensiveEquipment {
      * @param attackBuff represents the value of the bonus it gives to the owner
      */
     public Weapon(String name, int attackBuff) {
-        super(name);
-        this.owner = "guerrier";
-        this.attackBuff = attackBuff;
+        super(name, "guerrier", attackBuff);
     }
 }
