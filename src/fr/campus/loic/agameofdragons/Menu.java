@@ -39,6 +39,10 @@ public class Menu {
         this.gameClosed = newBool;
     }
 
+    public Scanner getClavier() {
+        return clavier;
+    }
+
     /**
      * Logs a message to the console using {@link GameLogger#LOGGER},
      * with colors reset after the message.

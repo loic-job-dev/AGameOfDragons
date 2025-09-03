@@ -29,9 +29,10 @@ public class EnemyCell extends Cell {
 
     @Override
     public void action(Character character, Menu menu) {
-        while (character.getLife() != 0 && this.enemy.getLife() != 0) {
+        int fightPosition = character.getPosition();
+        while (character.getLife() != 0 && this.enemy.getLife() != 0 && character.getPosition() == fightPosition) {
             character.fight(this.enemy);
-            if (this.enemy.getLife() != 0) {
+            if (this.enemy.getLife() != 0 && character.getPosition() == fightPosition) {
                 enemy.fight(character);
             }
         }

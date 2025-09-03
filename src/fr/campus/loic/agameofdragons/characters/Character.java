@@ -8,6 +8,8 @@ import fr.campus.loic.agameofdragons.interfaces.IFight;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
+import java.util.InputMismatchException;
+
 /**
  * This class represent the base of a character that the player will play with.
  */
@@ -26,7 +28,8 @@ public abstract class Character implements IFight<Enemy> {
     private final String defensiveEquipmentType;
 
     private Menu menu = new Menu();
-    private Dice dice20 = new Dice(20);
+    private final Dice dice20 = new Dice(20);
+    private final Dice dice6 = new Dice (6);
 
     /**
      * The constructor of the class that sets the name of the character, determinate by the player
@@ -150,22 +153,50 @@ public abstract class Character implements IFight<Enemy> {
      */
     @Override
     public void fight(Enemy enemy) {
-        menu.displayMessage("PV de l'ennemi : " + enemy.getLife());
-        int result = dice20.rollDice();
-        if (result != 1 && result != 20) {
-            enemy.setLife(enemy.getLife() - this.attack);
-        } else if (result == 1) {
-            menu.displayMessage(ConsoleColors.BOLD_RED + "Echec critique ! " + this.name + " rate complètement son attaque !\n");
-        } else if (result == 20) {
-            menu.displayMessage(ConsoleColors.BOLD_GREEN + "Coup critique ! " + this.name + " va faire très mal...\n");
-            enemy.setLife(enemy.getLife() - (this.attack+5));
-        }
-        if (enemy.getLife() < 0) {
-            enemy.setLife(0);
-        }
-        if (result != 1) {
-            menu.displayMessage(this.name + " frappe le/la " + enemy.getName() + ". Ses PV sont maintenant à " + enemy.getLife() + ".\n");
-        }
+        menu.displayMessage(ConsoleColors.CYAN + "Que veux-tu faire ?");
+        menu.displayMessage(ConsoleColors.PURPLE + "1- Fuir lâchement...");
+        menu.displayMessage(ConsoleColors.BOLD_RED + "2- Te battre glorieusement !\n");
+        menu.displayMessage(ConsoleColors.YELLOW + "Tapper le chiffre correspondant au choix");
+
+        try {
+            int choice = menu.getClavier().nextInt();
+            menu.getClavier().nextLine();
+
+            if (choice == 1) {
+                //Run
+                int result = dice6.rollDice();
+                int newPosition = this.position - result;
+                if (newPosition < 0) {
+                    newPosition = 0;
+                }
+                this.position = newPosition;
+                menu.displayMessage("\nTu fuis en case " + this.position + " !\n");
+            }
+
+            else if (choice == 2) {
+                //Fight
+                int result = dice20.rollDice();
+                if (result != 1 && result != 20) {
+                    enemy.setLife(enemy.getLife() - this.attack);
+                } else if (result == 1) {
+                    menu.displayMessage(ConsoleColors.BOLD_RED + "Echec critique ! " + this.name + " rate complètement son attaque !\n");
+                } else if (result == 20) {
+                    menu.displayMessage(ConsoleColors.BOLD_GREEN + "Coup critique ! " + this.name + " va faire très mal...\n");
+                    enemy.setLife(enemy.getLife() - (this.attack+5));
+                }
+                if (enemy.getLife() < 0) {
+                    enemy.setLife(0);
+                }
+                if (result != 1) {
+                    menu.displayMessage(this.name + " frappe le/la " + enemy.getName() + ". Ses PV sont maintenant à " + enemy.getLife() + ".\n");
+                }
+            } else {
+                menu.displayMessage(ConsoleColors.BOLD_RED + "\nMerci de saisir un chiffre valide pour indiquer ton choix.\n");
+            }
+        } catch (InputMismatchException e) {
+            menu.displayMessage(ConsoleColors.BOLD_RED + "\nMerci de saisir un chiffre valide pour indiquer ton choix.\n");
+            menu.getClavier().nextLine();
+        };
     }
 
     @Override
