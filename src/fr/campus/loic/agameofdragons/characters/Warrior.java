@@ -18,4 +18,6 @@ public class Warrior extends Character {
     public Warrior(String name) {
         super(name, 5, 10, new Weapon("Epée de base", 0), new Shield("bouclier de base", 0), "guerrier", "armes", "boucliers");
     }
+
+
 }

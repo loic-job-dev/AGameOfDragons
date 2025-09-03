@@ -1,13 +1,17 @@
 package fr.campus.loic.agameofdragons.characters;
 
+import fr.campus.loic.agameofdragons.Menu;
+import fr.campus.loic.agameofdragons.enemies.Enemy;
 import fr.campus.loic.agameofdragons.equipment.*;
 import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
+import fr.campus.loic.agameofdragons.interfaces.IFight;
+import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
 /**
  * This class represent the base of a character that the player will play with.
  */
-public abstract class Character {
+public abstract class Character implements IFight<Enemy> {
     private int id;
     private String name;
     private int attack;
@@ -20,6 +24,9 @@ public abstract class Character {
     private final String type;
     private final String offensiveEquipmentType;
     private final String defensiveEquipmentType;
+
+    private Menu menu = new Menu();
+    private Dice dice20 = new Dice(20);
 
     /**
      * The constructor of the class that sets the name of the character, determinate by the player
@@ -135,6 +142,32 @@ public abstract class Character {
     public int getId() {
         return this.id;
     }
+
+    /**
+     * allows the Character to fight an enemy. It can set a new value for the life attribute of the Enemy.
+     *
+     * @param enemy is the Enemy fought
+     */
+    @Override
+    public void fight(Enemy enemy) {
+        menu.displayMessage("PV de l'ennemi : " + enemy.getLife());
+        int result = dice20.rollDice();
+        if (result != 1 && result != 20) {
+            enemy.setLife(enemy.getLife() - this.attack);
+        } else if (result == 1) {
+            menu.displayMessage(ConsoleColors.BOLD_RED + "Echec critique ! " + this.name + " rate complètement son attaque !\n");
+        } else if (result == 20) {
+            menu.displayMessage(ConsoleColors.BOLD_GREEN + "Coup critique ! " + this.name + " va faire très mal...\n");
+            enemy.setLife(enemy.getLife() - (this.attack+5));
+        }
+        if (enemy.getLife() < 0) {
+            enemy.setLife(0);
+        }
+        if (result != 1) {
+            menu.displayMessage(this.name + " frappe le/la " + enemy.getName() + ". Ses PV sont maintenant à " + enemy.getLife() + ".\n");
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

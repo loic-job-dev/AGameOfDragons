@@ -67,7 +67,7 @@ public class Game {
         menu.displayMessage(ConsoleColors.RED + "Début de la partie !");
 
         //Loop where the player plays
-        while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed()) {
+        while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed() && character.getLife() != 0) {
             try {
                 menu.playerTurn(character, board, dice, db);
                 menu.displayMessage(board.getTiles().get(character.getPosition()).toString());
@@ -81,6 +81,12 @@ public class Game {
         //Victory condition
         if (character.getPosition() == board.getNumTiles()) {
             menu.displayMessage(ConsoleColors.BOLD_GREEN + "Tu es arrivé au bout du plateau, félicitations " + character.getName() + " !\n");
+            menu.setGameClosed(true);
+        }
+
+        //Defeat condition
+        if (character.getLife() == 0) {
+            menu.displayMessage(ConsoleColors.BOLD_RED + "Une mort bien peu héroïque pour " + character.getName() + "...\n");
             menu.setGameClosed(true);
         }
     }

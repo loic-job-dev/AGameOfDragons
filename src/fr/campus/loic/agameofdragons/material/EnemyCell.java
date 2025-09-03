@@ -6,12 +6,14 @@ import fr.campus.loic.agameofdragons.enemies.Dragon;
 import fr.campus.loic.agameofdragons.enemies.Enemy;
 import fr.campus.loic.agameofdragons.enemies.Gobelin;
 import fr.campus.loic.agameofdragons.enemies.Wizard;
+import fr.campus.loic.agameofdragons.interfaces.IDisplay;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
+import fr.campus.loic.agameofdragons.tools.GameLogger;
 
 /**
  * This class represents a tile where an enemy can be found
  */
-public class EnemyCell extends Cell{
+public class EnemyCell extends Cell {
 
     private Enemy enemy;
 
@@ -27,7 +29,12 @@ public class EnemyCell extends Cell{
 
     @Override
     public void action(Character character, Menu menu) {
-
+        while (character.getLife() != 0 && this.enemy.getLife() != 0) {
+            character.fight(this.enemy);
+            if (this.enemy.getLife() != 0) {
+                enemy.fight(character);
+            }
+        }
     }
 
     @Override
