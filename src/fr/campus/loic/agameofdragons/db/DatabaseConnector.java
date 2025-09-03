@@ -14,10 +14,10 @@ import java.util.List;
  */
 public class DatabaseConnector {
 
-    Connection conn = null;
-    Statement stmt = null;
-    ResultSet rs = null;
-    Menu menu = new Menu();
+    private Connection conn = null;
+    private Statement stmt = null;
+    private ResultSet rs = null;
+    private Menu menu = new Menu();
 
     /**
      * Displays on the console all the characters saved in the database

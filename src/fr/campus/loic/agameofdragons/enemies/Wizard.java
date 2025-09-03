@@ -9,9 +9,6 @@ public class Wizard extends Enemy{
      * The constructor sets generic values for this enemy
      */
     public Wizard(){
-        super();
-        this.name = "sorcier";
-        this.attack = 2;
-        this.life = 9;
+        super("sorcier", 2, 9);
     }
 }

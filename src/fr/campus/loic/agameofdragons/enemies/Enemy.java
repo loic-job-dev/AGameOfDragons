@@ -5,9 +5,15 @@ package fr.campus.loic.agameofdragons.enemies;
  */
 public abstract class Enemy {
 
-    protected String name;
-    protected int attack;
-    protected int life;
+    private String name;
+    private int attack;
+    private int life;
+
+    public Enemy (String name, int attack, int life) {
+        this.name = name;
+        this.attack = attack;
+        this.life = life;
+    }
 
     public String getName(){
         return this.name;
