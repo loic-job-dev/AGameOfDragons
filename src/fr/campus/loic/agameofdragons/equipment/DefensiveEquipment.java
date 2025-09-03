@@ -30,6 +30,9 @@ public abstract class DefensiveEquipment {
     public int getDefenseBuff(){
         return this.defenseBuff;
     }
+    public void setDefenseBuff(int defenseBuff){
+        this.defenseBuff = defenseBuff;
+    }
 
     @Override
     public String toString() {

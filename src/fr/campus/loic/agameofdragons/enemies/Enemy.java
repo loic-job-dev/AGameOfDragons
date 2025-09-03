@@ -2,6 +2,8 @@ package fr.campus.loic.agameofdragons.enemies;
 
 import fr.campus.loic.agameofdragons.Menu;
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.equipment.Potion;
+import fr.campus.loic.agameofdragons.equipment.Shield;
 import fr.campus.loic.agameofdragons.interfaces.IDisplay;
 import fr.campus.loic.agameofdragons.interfaces.IFight;
 import fr.campus.loic.agameofdragons.material.Dice;
@@ -59,15 +61,55 @@ public abstract class Enemy implements IFight<fr.campus.loic.agameofdragons.char
      */
     @Override
     public void fight(Character character) {
-        displayMessage("PV du héros : " + character.getLife());
+        displayMessage("PV du héros : " + character.getLife() + ", armure du héros : " + character.getDefensiveEquipment().getDefenseBuff());
         int result = dice20.rollDice();
+        int armorCharacter = character.getDefensiveEquipment().getDefenseBuff();
+
+        //Normal attack
         if (result != 1 && result != 20) {
-            character.setLife(character.getLife() - this.attack);
+            if (armorCharacter == 0) {
+                character.setLife(character.getLife() - this.attack);
+
+                //If the character has an armor
+            } else {
+                character.getDefensiveEquipment().setDefenseBuff(armorCharacter - this.attack);
+                //If the armor is destroyed
+                if (character.getDefensiveEquipment().getDefenseBuff() <= 0) {
+                    character.getDefensiveEquipment().setDefenseBuff(0);
+                    displayMessage("Le/la " + this.name + " a détruit le " + character.getDefensiveEquipment().getName());
+                    //Generation of a basic armor again
+                    if (character.getDefensiveEquipmentType().equals("boucliers")) {
+                        character.setDefensiveEquipment(new Shield("bouclier de base", 0));
+                    } else {
+                        character.setDefensiveEquipment(new Potion("philtre fade", 0));
+                    }
+                }
+            }
+
+            //Critical fail
         } else if (result == 1) {
             displayMessage(ConsoleColors.BOLD_GREEN + "Echec critique ! " + this.name + " rate complètement son attaque !\n");
+
+            //Critical success
         } else if (result == 20) {
             displayMessage(ConsoleColors.BOLD_RED + "Coup critique ! " + this.name + " va te faire très mal...\n");
-            character.setLife(character.getLife() - (this.attack+5));
+            if (armorCharacter == 0) {
+                character.setLife(character.getLife() - (this.attack + 5));
+
+                //If the character has an armor
+            } else {
+                character.getDefensiveEquipment().setDefenseBuff(armorCharacter - (this.attack + 5));
+                if (character.getDefensiveEquipment().getDefenseBuff() <= 0) {
+                    character.getDefensiveEquipment().setDefenseBuff(0);
+                    displayMessage("Le/la " + this.name + " a détruit le " + character.getDefensiveEquipment().getName());
+                    //Generation of a basic armor again
+                    if (character.getDefensiveEquipmentType().equals("boucliers")) {
+                        character.setDefensiveEquipment(new Shield("bouclier de base", 0));
+                    } else {
+                        character.setDefensiveEquipment(new Potion("philtre fade", 0));
+                    }
+                }
+            }
         }
         if (character.getLife() < 0) {
             character.setLife(0);
