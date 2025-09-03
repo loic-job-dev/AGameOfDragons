@@ -11,7 +11,7 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
  * This class represents a tile where an offensive equipment can be found
  */
 public class OffensiveBonusCell extends Cell {
-    protected OffensiveEquipment offensiveEquipment;
+    private OffensiveEquipment offensiveEquipment;
 
     public OffensiveBonusCell (OffensiveEquipment offensiveEquipment) {
         super();
@@ -29,7 +29,7 @@ public class OffensiveBonusCell extends Cell {
      */
     @Override
     public void action (Character character, Menu menu) {
-        if (!isAlreadyVisited) {
+        if (!getIsAlreadyVisited()) {
             try {
                 menu.displayMessage(ConsoleColors.BOLD_GREEN + "\nTu as trouvé un(e) " + offensiveEquipment.getName() + ".");
                 if (character.getOffensiveEquipment().getAttackBuff() <= offensiveEquipment.getAttackBuff()) {
@@ -42,7 +42,7 @@ public class OffensiveBonusCell extends Cell {
             } catch (WrongEquipmentException e) {
                 menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
             }
-            isAlreadyVisited = true;
+            setIsAlreadyVisited(true);
         } else {
             menu.displayMessage(ConsoleColors.BLUE + "Equipement déjà récupéré...\n");
         }

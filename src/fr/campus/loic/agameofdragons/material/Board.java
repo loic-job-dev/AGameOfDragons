@@ -15,7 +15,7 @@ import java.util.List;
 public class Board {
     private int id;
     private int numTiles;
-    protected List<Cell> tiles;
+    private List<Cell> tiles;
 
 
     /**

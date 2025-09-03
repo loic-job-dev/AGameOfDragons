@@ -13,7 +13,7 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
  */
 public class EnemyCell extends Cell{
 
-    protected Enemy enemy;
+    private Enemy enemy;
 
     public EnemyCell (Enemy enemy) {
         super();

@@ -10,8 +10,8 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
  */
 public abstract class Cell {
 
-    protected int id;
-    protected boolean isAlreadyVisited;
+    private int id;
+    private boolean isAlreadyVisited;
 
     /**
      * The constructor sets a boolean that is usefull to indicate if the tile has been visited

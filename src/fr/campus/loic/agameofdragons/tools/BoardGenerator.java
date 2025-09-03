@@ -27,8 +27,8 @@ import java.util.List;
  */
 public class BoardGenerator {
 
-    protected List<Cell> tiles;
-    protected int numTiles;
+    private List<Cell> tiles;
+    private int numTiles;
 
     /**
      * Constructs a BoardGenerator for a board with the specified number of tiles.

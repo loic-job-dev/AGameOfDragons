@@ -10,7 +10,7 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
  * This class represents a tile where a defensive equipment can be found
  */
 public class DefensiveBonusCell extends Cell{
-    protected DefensiveEquipment defensiveEquipment;
+    private DefensiveEquipment defensiveEquipment;
 
     public DefensiveBonusCell(DefensiveEquipment defensiveEquipment) {
         super();
@@ -30,7 +30,7 @@ public class DefensiveBonusCell extends Cell{
      */
     @Override
     public void action (Character character, Menu menu) {
-        if (!isAlreadyVisited) {
+        if (!getIsAlreadyVisited()) {
             try {
                 menu.displayMessage(ConsoleColors.BOLD_GREEN + "\nTu as trouvé un(e) " + this.defensiveEquipment.getName() + ".");
                 if (character.getDefensiveEquipment().getDefenseBuff() <= defensiveEquipment.getDefenseBuff()) {
@@ -42,7 +42,7 @@ public class DefensiveBonusCell extends Cell{
             } catch (WrongEquipmentException e) {
                 menu.displayMessage(ConsoleColors.YELLOW + e.getMessage());
             }
-            isAlreadyVisited = true;
+            setIsAlreadyVisited(true);
         } else {
             menu.displayMessage(ConsoleColors.BLUE + "Equipement déjà récupéré...\n");
         }
