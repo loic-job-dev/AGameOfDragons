@@ -8,28 +8,41 @@ import fr.campus.loic.agameofdragons.tools.ConsoleColors;
  * This class represent the base of a character that the player will play with.
  */
 public abstract class Character {
-    protected int id;
-    protected String name;
-    protected int attack;
-    protected int life;
-    protected int position;
-    protected OffensiveEquipment offensiveEquipment;
-    protected DefensiveEquipment defensiveEquipment;
+    private int id;
+    private String name;
+    private int attack;
+    private int life;
+    private int position;
+    private OffensiveEquipment offensiveEquipment;
+    private DefensiveEquipment defensiveEquipment;
 
     //To display the toString method in french :
-    protected String type;
-    protected String offensiveEquipmentType;
-    protected String defensiveEquipmentType;
-
+    private final String type;
+    private final String offensiveEquipmentType;
+    private final String defensiveEquipmentType;
 
     /**
      * The constructor of the class that sets the name of the character, determinate by the player
      *
      * @param name is the name of the character
      */
-    public Character(String name){
+    public Character(String name,
+                     int attack,
+                     int life,
+                     OffensiveEquipment offensiveEquipment,
+                     DefensiveEquipment defensiveEquipment,
+                     String type,
+                     String offensiveEquipmentType,
+                     String defensiveEquipmentType){
         this.name = name;
+        this.attack = attack;
+        this.life = life;
         this.position = 0;
+        this.offensiveEquipment = offensiveEquipment;
+        this.defensiveEquipment = defensiveEquipment;
+        this.type = type;
+        this.offensiveEquipmentType = offensiveEquipmentType;
+        this.defensiveEquipmentType = defensiveEquipmentType;
     }
 
     public String getType() {

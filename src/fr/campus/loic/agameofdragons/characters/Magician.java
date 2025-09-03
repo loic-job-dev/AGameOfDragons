@@ -8,22 +8,12 @@ import fr.campus.loic.agameofdragons.equipment.Spell;
  */
 public class Magician extends Character {
 
-    protected Spell spell;
-    protected Potion potion;
-
     /**
      * The constructor of the class that sets the correct attributes for a magician
      *
      * @param name is the name of the character
      */
     public Magician(String name) {
-        super(name);
-        this.type = "magicien";
-        this.attack = 8;
-        this.life = 6;
-        this.offensiveEquipmentType = "sorts";
-        this.offensiveEquipment = new Spell("sort basique", 0);
-        this.defensiveEquipmentType = "philtres";
-        this.defensiveEquipment = new Potion("philtre fade", 0);
+        super(name, 8, 6, new Spell("sort basique", 0), new Potion("philtre fade", 0), "magicien", "sorts", "philtres");
     }
 }
