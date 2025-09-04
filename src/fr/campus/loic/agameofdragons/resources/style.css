@@ -1,0 +1,15 @@
+.root {
+    -fx-background-color: black;
+}
+
+.label {
+    -fx-text-fill: #800020;
+}
+
+.text-area, .text-field {
+    -fx-control-inner-background: black;
+    -fx-text-fill: #800020;
+    -fx-highlight-fill: #800020;
+    -fx-highlight-text-fill: black;
+    -fx-background-color: black;
+}

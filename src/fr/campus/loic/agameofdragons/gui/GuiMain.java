@@ -35,6 +35,10 @@ public class GuiMain extends Application {
         TextArea consoleArea = new TextArea();
         consoleArea.setEditable(false);
         consoleArea.setFont(font);
+        //automatic scroll
+        consoleArea.textProperty().addListener((obs, oldText, newText) -> {
+            consoleArea.positionCaret(consoleArea.getLength());
+        });
 
         // TextField for the user's text
         Label playerInputLabel = new Label("Saisie joueur :");
@@ -50,6 +54,9 @@ public class GuiMain extends Application {
         root.setBottom(bottomBox);
 
         Scene scene = new Scene(root, 1080, 610, Color.BLACK);
+
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("A Game of Dragons");
         primaryStage.show();

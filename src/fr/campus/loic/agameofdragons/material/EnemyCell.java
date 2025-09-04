@@ -6,6 +6,7 @@ import fr.campus.loic.agameofdragons.enemies.Dragon;
 import fr.campus.loic.agameofdragons.enemies.Enemy;
 import fr.campus.loic.agameofdragons.enemies.Gobelin;
 import fr.campus.loic.agameofdragons.enemies.Wizard;
+import fr.campus.loic.agameofdragons.exceptions.RunTheFightException;
 import fr.campus.loic.agameofdragons.interfaces.IDisplay;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 import fr.campus.loic.agameofdragons.tools.GameLogger;
@@ -28,7 +29,7 @@ public class EnemyCell extends Cell {
     }
 
     @Override
-    public void action(Character character, Menu menu) {
+    public void action(Character character, Menu menu) throws RunTheFightException {
         int fightPosition = character.getPosition();
         while (character.getLife() != 0 && this.enemy.getLife() != 0 && character.getPosition() == fightPosition) {
             character.fight(this.enemy);

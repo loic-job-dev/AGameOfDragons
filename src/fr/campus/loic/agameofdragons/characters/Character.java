@@ -3,6 +3,7 @@ package fr.campus.loic.agameofdragons.characters;
 import fr.campus.loic.agameofdragons.Menu;
 import fr.campus.loic.agameofdragons.enemies.Enemy;
 import fr.campus.loic.agameofdragons.equipment.*;
+import fr.campus.loic.agameofdragons.exceptions.RunTheFightException;
 import fr.campus.loic.agameofdragons.exceptions.WrongEquipmentException;
 import fr.campus.loic.agameofdragons.interfaces.IFight;
 import fr.campus.loic.agameofdragons.material.Dice;
@@ -152,7 +153,7 @@ public abstract class Character implements IFight<Enemy> {
      * @param enemy is the Enemy fought
      */
     @Override
-    public void fight(Enemy enemy) {
+    public void fight(Enemy enemy) throws RunTheFightException {
         menu.displayMessage(ConsoleColors.CYAN + "Que veux-tu faire ?");
         menu.displayMessage(ConsoleColors.PURPLE + "1- Fuir lâchement...");
         menu.displayMessage(ConsoleColors.BOLD_RED + "2- Te battre glorieusement !\n");
@@ -164,13 +165,7 @@ public abstract class Character implements IFight<Enemy> {
 
             if (choice == 1) {
                 //Run
-                int result = dice6.rollDice();
-                int newPosition = this.position - result;
-                if (newPosition < 0) {
-                    newPosition = 0;
-                }
-                this.position = newPosition;
-                menu.displayMessage("\nTu fuis en case " + this.position + " !\n");
+                throw new RunTheFightException("Tu as choisis de fuir...");
             }
 
             else if (choice == 2) {

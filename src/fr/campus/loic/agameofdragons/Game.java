@@ -3,6 +3,7 @@ package fr.campus.loic.agameofdragons;
 import fr.campus.loic.agameofdragons.characters.Character;
 import fr.campus.loic.agameofdragons.db.DatabaseConnector;
 import fr.campus.loic.agameofdragons.exceptions.PersonnageHorsPlateauException;
+import fr.campus.loic.agameofdragons.exceptions.RunTheFightException;
 import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
@@ -24,7 +25,7 @@ public class Game {
         this.menu = new Menu();
         this.dice = new Dice(6);
         //numTiles minimal to avoid errors with the random tiles : 14 with 6 weapons and 3 enemies
-        this.board = new Board(64);
+        this.board = new Board(96);
         this.db = new DatabaseConnector();
     }
 
@@ -75,6 +76,15 @@ public class Game {
             } catch (PersonnageHorsPlateauException e) {
                 menu.displayMessage(ConsoleColors.RED + e.getMessage());
                 character.setPosition(board.getNumTiles());
+            } catch (RunTheFightException e) {
+                menu.displayMessage(ConsoleColors.RED + e.getMessage());
+                int result = dice.rollDice();
+                int newPosition = character.getPosition() - result;
+                if (newPosition < 0) {
+                    newPosition = 0;
+                }
+                character.setPosition(newPosition);
+                menu.displayMessage("\nTu fuis en case " + character.getPosition() + " !\n");
             }
         }
 
