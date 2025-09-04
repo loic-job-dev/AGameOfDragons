@@ -35,6 +35,7 @@ public class Game {
      */
     public void launchGame(){
 
+        db.createDatabase("F@keP@ssw0rd1602");
         db.createBoard(board);
 
         menu.displayMessage(ConsoleColors.CYAN + "Bonjour à toi, nouveau joueur.\n" +

@@ -9,6 +9,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  * Utility class that contains all the methods to interact with the database
  */
@@ -18,6 +23,71 @@ public class DatabaseConnector {
     private Statement stmt = null;
     private ResultSet rs = null;
     private Menu menu = new Menu();
+
+
+    /**
+     * Creates the database if not found
+     */
+    public void createDatabase(String password) {
+
+        String URL =
+                "jdbc:mysql://localhost:3306/AGameOfDragons"
+                        + "?createDatabaseIfNotExist=true"
+                        + "&serverTimezone=UTC&useSSL=false";
+        String USER = "root";
+
+            // Creation of the table Characters
+            String sqlCharacters = """
+            CREATE TABLE IF NOT EXISTS `Characters` (
+              `id` INT NOT NULL AUTO_INCREMENT,
+              `name` LONGTEXT,
+              `attack` INT,
+              `life` INT,
+              `position` INT,
+              `offensiveEquipment` LONGTEXT,
+              `defensiveEquipment` LONGTEXT,
+              `type` LONGTEXT,
+              `offensiveEquipmentType` LONGTEXT,
+              `defensiveEquipmentType` LONGTEXT,
+              PRIMARY KEY (`id`)
+            ) ;
+        """;
+
+            String sqlBoard = """
+            CREATE TABLE IF NOT EXISTS `Board` (
+              `id` INT NOT NULL AUTO_INCREMENT,
+              `numTiles` INT,
+              PRIMARY KEY (`id`)
+            ) ;
+        """;
+
+            String sqlCell = """
+            CREATE TABLE IF NOT EXISTS `Cell` (
+              `id` int AUTO_INCREMENT NOT NULL UNIQUE,
+              	`board_Id` int NOT NULL,
+              	`index` int NOT NULL,
+              	`isAlreadyVisited` boolean NOT NULL DEFAULT false,
+              	`type` longtext NOT NULL,
+              	`defensiveEquipment` longtext,
+              	`offensiveEquipment` longtext,
+              	`enemy` longtext,
+              	PRIMARY KEY (`id`)
+            ) ;
+        """;
+
+            try (Connection conn = DriverManager.getConnection(URL, USER, password);
+                 Statement stmt = conn.createStatement()) {
+
+                stmt.execute(sqlBoard);
+                stmt.execute(sqlCharacters);
+                stmt.execute(sqlCell);
+
+                System.out.println("Base MySQL OK (tables créées si absentes).");
+            } catch (SQLException e) {
+                System.err.println("Erreur création BDD: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
 
     /**
      * Displays on the console all the characters saved in the database
