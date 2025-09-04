@@ -29,16 +29,14 @@ public class DatabaseConnector {
      * Creates the database if not found
      */
     public void createDatabase(String password) {
-
-        String URL =
-                "jdbc:mysql://localhost:3306/AGameOfDragons"
+        String URL = "jdbc:mysql://localhost:3306/AGameOfDragons"
                         + "?createDatabaseIfNotExist=true"
                         + "&serverTimezone=UTC&useSSL=false";
         String USER = "root";
 
-            // Creation of the table Characters
-            String sqlCharacters = """
-            CREATE TABLE IF NOT EXISTS `Characters` (
+        // Creation of the table Characters
+        String sqlCharacters = """
+        CREATE TABLE IF NOT EXISTS `Characters` (
               `id` INT NOT NULL AUTO_INCREMENT,
               `name` LONGTEXT,
               `attack` INT,
@@ -53,41 +51,47 @@ public class DatabaseConnector {
             ) ;
         """;
 
-            String sqlBoard = """
-            CREATE TABLE IF NOT EXISTS `Board` (
+        // Creation of the table Board
+        String sqlBoard = """
+        CREATE TABLE IF NOT EXISTS `Board` (
               `id` INT NOT NULL AUTO_INCREMENT,
               `numTiles` INT,
               PRIMARY KEY (`id`)
             ) ;
         """;
 
-            String sqlCell = """
-            CREATE TABLE IF NOT EXISTS `Cell` (
-              `id` int AUTO_INCREMENT NOT NULL UNIQUE,
-              	`board_Id` int NOT NULL,
-              	`index` int NOT NULL,
-              	`isAlreadyVisited` boolean NOT NULL DEFAULT false,
-              	`type` longtext NOT NULL,
-              	`defensiveEquipment` longtext,
-              	`offensiveEquipment` longtext,
-              	`enemy` longtext,
-              	PRIMARY KEY (`id`)
-            ) ;
+        // Creation of the table Cell
+        String sqlCell = """
+        CREATE TABLE IF NOT EXISTS `Cell` (
+            `id` INT AUTO_INCREMENT NOT NULL,
+            `board_Id` INT NOT NULL,
+            `index` INT NOT NULL,
+              `isAlreadyVisited` BOOLEAN NOT NULL DEFAULT false,
+              `type` LONGTEXT NOT NULL,
+              `defensiveEquipment` LONGTEXT,
+              `offensiveEquipment` LONGTEXT,
+              `enemy` LONGTEXT,
+              PRIMARY KEY (`id`),
+              CONSTRAINT `fk_cell_board`
+                FOREIGN KEY (`board_Id`) REFERENCES `Board`(`id`)
+                ON DELETE CASCADE
+                ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         """;
 
-            try (Connection conn = DriverManager.getConnection(URL, USER, password);
-                 Statement stmt = conn.createStatement()) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, password);
+             Statement stmt = conn.createStatement()) {
 
-                stmt.execute(sqlBoard);
-                stmt.execute(sqlCharacters);
-                stmt.execute(sqlCell);
+            stmt.execute(sqlBoard);
+            stmt.execute(sqlCharacters);
+            stmt.execute(sqlCell);
 
-                System.out.println("Base MySQL OK (tables créées si absentes).");
-            } catch (SQLException e) {
-                System.err.println("Erreur création BDD: " + e.getMessage());
-                e.printStackTrace();
-            }
+            System.out.println("Base MySQL OK (tables créées si absentes).");
+        } catch (SQLException e) {
+            System.err.println("Erreur création BDD: " + e.getMessage());
+            e.printStackTrace();
         }
+    }
 
     /**
      * Displays on the console all the characters saved in the database
