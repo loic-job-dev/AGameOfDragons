@@ -173,17 +173,16 @@ public abstract class Character implements IFight<Enemy> {
                 int result = dice20.rollDice();
                 if (result != 1 && result != 20) {
                     enemy.setLife(enemy.getLife() - this.attack);
+                    menu.displayMessage(ConsoleColors.GREEN + this.name + " frappe le/la " + enemy.getName() + ". Ses PV sont maintenant à " + enemy.getLife() + ".\n");
                 } else if (result == 1) {
                     menu.displayMessage(ConsoleColors.BOLD_RED + "Echec critique ! " + this.name + " rate complètement son attaque !\n");
                 } else if (result == 20) {
                     menu.displayMessage(ConsoleColors.BOLD_GREEN + "Coup critique ! " + this.name + " va faire très mal...\n");
                     enemy.setLife(enemy.getLife() - (this.attack+5));
+                    menu.displayMessage(ConsoleColors.GREEN + this.name + " frappe le/la " + enemy.getName() + ". Ses PV sont maintenant à " + enemy.getLife() + ".\n");
                 }
                 if (enemy.getLife() < 0) {
                     enemy.setLife(0);
-                }
-                if (result != 1) {
-                    menu.displayMessage(this.name + " frappe le/la " + enemy.getName() + ". Ses PV sont maintenant à " + enemy.getLife() + ".\n");
                 }
             } else {
                 menu.displayMessage(ConsoleColors.BOLD_RED + "\nMerci de saisir un chiffre valide pour indiquer ton choix.\n");

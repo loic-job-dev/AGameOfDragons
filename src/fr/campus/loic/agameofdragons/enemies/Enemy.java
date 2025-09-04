@@ -67,24 +67,7 @@ public abstract class Enemy implements IFight<fr.campus.loic.agameofdragons.char
 
         //Normal attack
         if (result != 1 && result != 20) {
-            if (armorCharacter == 0) {
-                character.setLife(character.getLife() - this.attack);
-
-                //If the character has an armor
-            } else {
-                character.getDefensiveEquipment().setDefenseBuff(armorCharacter - this.attack);
-                //If the armor is destroyed
-                if (character.getDefensiveEquipment().getDefenseBuff() <= 0) {
-                    character.getDefensiveEquipment().setDefenseBuff(0);
-                    displayMessage("Le/la " + this.name + " a détruit le " + character.getDefensiveEquipment().getName());
-                    //Generation of a basic armor again
-                    if (character.getDefensiveEquipmentType().equals("boucliers")) {
-                        character.setDefensiveEquipment(new Shield("bouclier de base", 0));
-                    } else {
-                        character.setDefensiveEquipment(new Potion("philtre fade", 0));
-                    }
-                }
-            }
+            attackAHero(character, this.attack);
 
             //Critical fail
         } else if (result == 1) {
@@ -93,23 +76,7 @@ public abstract class Enemy implements IFight<fr.campus.loic.agameofdragons.char
             //Critical success
         } else if (result == 20) {
             displayMessage(ConsoleColors.BOLD_RED + "Coup critique ! " + this.name + " va te faire très mal...\n");
-            if (armorCharacter == 0) {
-                character.setLife(character.getLife() - (this.attack + 5));
-
-                //If the character has an armor
-            } else {
-                character.getDefensiveEquipment().setDefenseBuff(armorCharacter - (this.attack + 5));
-                if (character.getDefensiveEquipment().getDefenseBuff() <= 0) {
-                    character.getDefensiveEquipment().setDefenseBuff(0);
-                    displayMessage("Le/la " + this.name + " a détruit le " + character.getDefensiveEquipment().getName());
-                    //Generation of a basic armor again
-                    if (character.getDefensiveEquipmentType().equals("boucliers")) {
-                        character.setDefensiveEquipment(new Shield("bouclier de base", 0));
-                    } else {
-                        character.setDefensiveEquipment(new Potion("philtre fade", 0));
-                    }
-                }
-            }
+            attackAHero(character, (this.attack + 5));
         }
         if (character.getLife() < 0) {
             character.setLife(0);
@@ -118,6 +85,35 @@ public abstract class Enemy implements IFight<fr.campus.loic.agameofdragons.char
             displayMessage("Le/la " + this.name + " frappe " + character.getName() + ". Ses PV sont maintenant à " + character.getLife() + ".\n");
         }
     }
+
+    /**
+     * manage the interaction between the attack of the enemy and the armor of the character (and the durability of the defensive object)
+     *
+     * @param character is the character fought by the enemy
+     */
+    private void attackAHero(Character character, int attack) {
+        int armorCharacter = character.getDefensiveEquipment().getDefenseBuff();
+
+        if (armorCharacter == 0) {
+            character.setLife(character.getLife() - attack);
+
+            //If the character has an armor
+        } else {
+            character.getDefensiveEquipment().setDefenseBuff(armorCharacter - attack);
+            //If the armor is destroyed
+            if (character.getDefensiveEquipment().getDefenseBuff() <= 0) {
+                character.getDefensiveEquipment().setDefenseBuff(0);
+                displayMessage("Le/la " + this.name + " a détruit le " + character.getDefensiveEquipment().getName());
+                //Generation of a basic armor again
+                if (character.getDefensiveEquipmentType().equals("boucliers")) {
+                    character.setDefensiveEquipment(new Shield("bouclier de base", 0));
+                } else {
+                    character.setDefensiveEquipment(new Potion("philtre fade", 0));
+                }
+            }
+        }
+    }
+
 
     @Override
     public String toString() {
