@@ -71,8 +71,8 @@ public class Game {
         while (character.getPosition() != board.getNumTiles() && !menu.getGameClosed() && character.getLife() != 0) {
             try {
                 menu.playerTurn(character, board, dice, db);
-                menu.displayMessage(board.getTiles().get(character.getPosition()).toString());
-                board.getTiles().get(character.getPosition()).action(character, menu);
+                menu.displayMessage(board.getTiles().get(character.getPosition()-1).toString());
+                board.getTiles().get(character.getPosition()-1).action(character, menu);
             } catch (PersonnageHorsPlateauException e) {
                 menu.displayMessage(ConsoleColors.RED + e.getMessage());
                 character.setPosition(board.getNumTiles());
