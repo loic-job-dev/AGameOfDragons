@@ -8,6 +8,10 @@ import fr.campus.loic.agameofdragons.material.Dice;
 import fr.campus.loic.agameofdragons.material.Board;
 import fr.campus.loic.agameofdragons.tools.ConsoleColors;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 /**
  * This class implements all the game logic
  */
@@ -26,7 +30,34 @@ public class Game {
         this.dice = new Dice(6);
         //numTiles minimal to avoid errors with the random tiles : 14 with 6 weapons and 3 enemies
         this.board = new Board(96);
-        this.db = new DatabaseConnector();
+
+        //Path for dev :
+        String path = System.getProperty("user.dir") + "/out/artifacts/AGameOfDragons_jar/properties.txt";
+        //Path in prod :
+        //String path = System.getProperty("user.dir") + "/properties.txt";
+
+        Properties props = new Properties();
+        try (FileReader fr = new FileReader(path)) {
+            props.load(fr); // Charge le fichier properties
+
+            String user = props.getProperty("USER");
+            String password = props.getProperty("PASSWORD");
+            String host = props.getProperty("HOST");
+            String port = props.getProperty("PORT");
+            String database = props.getProperty("DATABASE");
+
+            //System.out.println("User: " + user);
+            //System.out.println("Password: " + password);
+
+            //Tests for the database connection
+            this.db = new DatabaseConnector(user, password, host, port, database);
+
+            //Display of all the heroes
+            //db.getHeroes();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -35,7 +66,7 @@ public class Game {
      */
     public void launchGame(){
 
-        db.createDatabase("F@keP@ssw0rd1602");
+        db.createDatabase();
         db.createBoard(board);
 
         menu.displayMessage(ConsoleColors.CYAN + "Bonjour à toi, nouveau joueur.\n" +

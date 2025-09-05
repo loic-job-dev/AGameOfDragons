@@ -24,18 +24,29 @@ public class DatabaseConnector {
     private ResultSet rs = null;
     private Menu menu = new Menu();
 
+    private String user;
+    private String password;
+    private String host;
+    private String port;
+    private String database;
 
+
+    public DatabaseConnector(String user, String password, String host, String port, String database) {
+        this.user = user;
+        this.password = password;
+        this.host = host;
+        this.port = port;
+        this.database = database;
+    }
     /**
      * Creates the database if not found
      */
-    public void createDatabase(String password) {
+    public void createDatabase() {
         String URL = "jdbc:mysql://localhost:3306/AGameOfDragons"
                 + "?createDatabaseIfNotExist=true"
                 + "&serverTimezone=UTC"
                 + "&useSSL=false"
                 + "&allowPublicKeyRetrieval=true";
-
-        String USER = "root";
 
         // Creation of the table Characters
         String sqlCharacters = """
@@ -82,14 +93,13 @@ public class DatabaseConnector {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         """;
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, password);
+        try (Connection conn = DriverManager.getConnection(URL, this.user, this.password);
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(sqlBoard);
             stmt.execute(sqlCharacters);
             stmt.execute(sqlCell);
 
-            System.out.println("Base MySQL OK (tables créées si absentes).");
         } catch (SQLException e) {
             System.err.println("Erreur création BDD: " + e.getMessage());
             e.printStackTrace();
@@ -101,7 +111,7 @@ public class DatabaseConnector {
      */
     public void getHeroes() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
 
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM `Characters`");
@@ -160,6 +170,8 @@ public class DatabaseConnector {
      */
     public void createHero(Character character) {
 
+        String url = "jdbc:mysql://"+this.host+":"+this.port+"/"+this.database; //localhost:3306/AGameOfDragons"
+
         String sql = "INSERT INTO `Characters` " + "(name, attack, life, position, offensiveEquipment, DefensiveEquipment, type, offensiveEquipmentType, defensiveEquipmentType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Gson gson = new Gson();
@@ -170,7 +182,7 @@ public class DatabaseConnector {
         //OffensiveEquipment offensiveEquipment = gson.fromJson(jsonOffensive, OffensiveEquipment.class);
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -221,7 +233,7 @@ public class DatabaseConnector {
         //OffensiveEquipment offensiveEquipment = gson.fromJson(jsonOffensive, OffensiveEquipment.class);
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -263,7 +275,7 @@ public class DatabaseConnector {
                 "WHERE id = ?";
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -291,7 +303,7 @@ public class DatabaseConnector {
         int boardId = 0;
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -321,7 +333,7 @@ public class DatabaseConnector {
         Gson gson = new Gson();
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons","root", "F@keP@ssw0rd1602");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
