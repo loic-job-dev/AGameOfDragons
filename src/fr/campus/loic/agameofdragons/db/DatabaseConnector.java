@@ -30,8 +30,11 @@ public class DatabaseConnector {
      */
     public void createDatabase(String password) {
         String URL = "jdbc:mysql://localhost:3306/AGameOfDragons"
-                        + "?createDatabaseIfNotExist=true"
-                        + "&serverTimezone=UTC&useSSL=false";
+                + "?createDatabaseIfNotExist=true"
+                + "&serverTimezone=UTC"
+                + "&useSSL=false"
+                + "&allowPublicKeyRetrieval=true";
+
         String USER = "root";
 
         // Creation of the table Characters
