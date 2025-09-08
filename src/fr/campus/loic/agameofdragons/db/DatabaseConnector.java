@@ -42,7 +42,8 @@ public class DatabaseConnector {
      * Creates the database if not found
      */
     public void createDatabase() {
-        String URL = "jdbc:mysql://localhost:3306/AGameOfDragons"
+
+        String URL = "jdbc:mysql://"+this.host+":"+this.port+"/"+this.database
                 + "?createDatabaseIfNotExist=true"
                 + "&serverTimezone=UTC"
                 + "&useSSL=false"
@@ -182,7 +183,7 @@ public class DatabaseConnector {
         //OffensiveEquipment offensiveEquipment = gson.fromJson(jsonOffensive, OffensiveEquipment.class);
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
+            conn = DriverManager.getConnection(url, this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -221,6 +222,8 @@ public class DatabaseConnector {
      */
     public void editHero (Character character) {
 
+        String url = "jdbc:mysql://"+this.host+":"+this.port+"/"+this.database;
+
         String sql = "UPDATE `Characters` " +
                 "SET name = ?, attack = ?, life = ?, position = ?, offensiveEquipment = ?, DefensiveEquipment = ?, type = ?, offensiveEquipmentType = ?, defensiveEquipmentType = ? " +
                 "WHERE id = ?";
@@ -233,7 +236,7 @@ public class DatabaseConnector {
         //OffensiveEquipment offensiveEquipment = gson.fromJson(jsonOffensive, OffensiveEquipment.class);
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
+            conn = DriverManager.getConnection(url, this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -270,12 +273,15 @@ public class DatabaseConnector {
      * @param character is the character played with
      */
     public void changeLifePoints(Character character) {
+
+        String url = "jdbc:mysql://"+this.host+":"+this.port+"/"+this.database;
+
         String sql = "UPDATE `Characters` " +
                 "SET life = ?" +
                 "WHERE id = ?";
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
+            conn = DriverManager.getConnection(url, this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -299,11 +305,13 @@ public class DatabaseConnector {
      */
     public void createBoard(Board board) {
 
+        String url = "jdbc:mysql://"+this.host+":"+this.port+"/"+this.database;
+
         String sql = "INSERT INTO Board " + "(numTiles) VALUES (?)";
         int boardId = 0;
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
+            conn = DriverManager.getConnection(url, this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -333,7 +341,7 @@ public class DatabaseConnector {
         Gson gson = new Gson();
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
+            conn = DriverManager.getConnection(url, this.user, this.password);
 
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 

@@ -32,9 +32,9 @@ public class Game {
         this.board = new Board(96);
 
         //Path for dev :
-        String path = System.getProperty("user.dir") + "/out/artifacts/AGameOfDragons_jar/properties.txt";
+        //String path = System.getProperty("user.dir") + "/out/artifacts/AGameOfDragons_jar/properties.txt";
         //Path in prod :
-        //String path = System.getProperty("user.dir") + "/properties.txt";
+        String path = System.getProperty("user.dir") + "/properties.txt";
 
         Properties props = new Properties();
         try (FileReader fr = new FileReader(path)) {

@@ -10,9 +10,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         //Path for dev :
-        String path = System.getProperty("user.dir") + "/out/artifacts/AGameOfDragons_jar/properties.txt";
+        //String path = System.getProperty("user.dir") + "/out/artifacts/AGameOfDragons_jar/properties.txt";
         //Path in prod :
-        //String path = System.getProperty("user.dir") + "/properties.txt";
+        String path = System.getProperty("user.dir") + "/properties.txt";
 
         Properties props = new Properties();
 
@@ -29,7 +29,7 @@ public class Main {
             //System.out.println("Password: " + password);
 
             //Tests for the database connection
-            DatabaseConnector db = new DatabaseConnector(user, password, host, port, database);
+            //DatabaseConnector db = new DatabaseConnector(user, password, host, port, database);
 
             //Display of all the heroes
             //db.getHeroes();
