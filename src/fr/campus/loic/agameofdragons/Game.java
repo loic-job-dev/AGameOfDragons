@@ -17,10 +17,10 @@ import java.util.Properties;
  */
 public class Game {
 
-    Menu menu;
-    Dice dice;
-    Board board;
-    DatabaseConnector db;
+    private Menu menu;
+    private Dice dice;
+    private Board board;
+    private DatabaseConnector db;
 
     /**
      * The constructor sets a menu, a dice with 6 faces and a board with 64 tiles.
@@ -46,10 +46,6 @@ public class Game {
             String port = props.getProperty("PORT");
             String database = props.getProperty("DATABASE");
 
-            //System.out.println("User: " + user);
-            //System.out.println("Password: " + password);
-
-            //Tests for the database connection
             this.db = new DatabaseConnector(user, password, host, port, database);
 
             //Display of all the heroes
