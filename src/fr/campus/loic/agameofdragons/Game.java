@@ -23,7 +23,7 @@ public class Game {
     private DatabaseConnector db;
 
     /**
-     * The constructor sets a menu, a dice with 6 faces and a board with 64 tiles.
+     * The constructor sets a menu, a dice with 6 faces and a board with 96 tiles. A connection to the database on local is tried.
      */
     public Game() {
         this.menu = new Menu();
@@ -71,6 +71,8 @@ public class Game {
                 ConsoleColors.YELLOW + "Commence par créer ton personnage.\n");
 
         Character player =  menu.createCharacter(db);
+
+        //Character player = db.loadCharacter(43);
 
         menu.displayMessage(ConsoleColors.CYAN + "Bienvenue sur A Game Of Dragons, " + player.getName() + " !\n" +
                 ConsoleColors.RED + "Prêt à souffrir ?\n");

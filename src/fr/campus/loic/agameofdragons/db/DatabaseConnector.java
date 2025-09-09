@@ -3,6 +3,9 @@ package fr.campus.loic.agameofdragons.db;
 import com.google.gson.Gson;
 import fr.campus.loic.agameofdragons.Menu;
 import fr.campus.loic.agameofdragons.characters.Character;
+import fr.campus.loic.agameofdragons.characters.Magician;
+import fr.campus.loic.agameofdragons.characters.Warrior;
+import fr.campus.loic.agameofdragons.equipment.*;
 import fr.campus.loic.agameofdragons.material.*;
 
 import java.sql.*;
@@ -165,6 +168,87 @@ public class DatabaseConnector {
                 stmt = null;
             }
         }
+    }
+
+    /**
+     * loads a character from the database, and let the player play with it instead of creating a new one
+     *
+     * @param id is the unique Id of the character in the database
+     * @return the character played with
+     */
+    public Character loadCharacter(int id) {
+        String url = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database;
+
+        String sql = "SELECT * FROM `Characters` WHERE `id` = " + id;
+
+        Character character = null;
+
+        try {
+            conn = DriverManager.getConnection(url, this.user, this.password);
+
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            //Here comes the code
+            if (rs.next()) {
+                String name = rs.getString("name");
+                int attack = rs.getInt("attack");
+                int life = rs.getInt("life");
+                int position = rs.getInt("position");
+                String jsonOffensive = rs.getString("offensiveEquipment");
+                String jsonDefensive = rs.getString("defensiveEquipment");
+                String type = rs.getString("type");
+                String offensiveEquipmentType =  rs.getString("offensiveEquipmentType");
+                String defensiveEquipmentType = rs.getString("defensiveEquipmentType");
+
+                Gson gson = new Gson();
+
+                if (type.equals("guerrier")) {
+                    OffensiveEquipment offensiveEquipment = gson.fromJson(jsonOffensive, Weapon.class);
+                    DefensiveEquipment defensiveEquipment = gson.fromJson(jsonDefensive, Shield.class);
+
+                    character = new Warrior(name);
+                    character.setOffensiveEquipment(offensiveEquipment);
+                    character.setDefensiveEquipment(defensiveEquipment);
+                } else {
+                    OffensiveEquipment offensiveEquipment = gson.fromJson(jsonOffensive, Spell.class);
+                    DefensiveEquipment defensiveEquipment = gson.fromJson(jsonDefensive, Potion.class);
+
+                    character = new Magician(name);
+                    character.setOffensiveEquipment(offensiveEquipment);
+                    character.setDefensiveEquipment(defensiveEquipment);
+                }
+
+                character.setAttack(attack);
+                character.setLife(life);
+                character.setPosition(position);
+
+            }
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+                rs = null;
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+
+                stmt = null;
+            }
+        }
+
+        return character;
     }
 
     /**
@@ -361,19 +445,19 @@ public class DatabaseConnector {
                     String jsonDefensive = gson.toJson(cell.getContent());
                     pstmt.setString(5, jsonDefensive);
                 } else {
-                    pstmt.setNull(5, java.sql.Types.VARCHAR);
+                    pstmt.setNull(5, Types.VARCHAR);
                 }
                 if (cell instanceof OffensiveBonusCell) {
                     String jsonOffensive = gson.toJson(cell.getContent());
                     pstmt.setString(6, jsonOffensive);
                 } else {
-                    pstmt.setNull(6, java.sql.Types.VARCHAR);
+                    pstmt.setNull(6, Types.VARCHAR);
                 }
                 if (cell instanceof EnemyCell) {
                     String jsonEnemy = gson.toJson(cell.getContent());
                     pstmt.setString(7, jsonEnemy);
                 } else {
-                    pstmt.setNull(7, java.sql.Types.VARCHAR);
+                    pstmt.setNull(7, Types.VARCHAR);
                 }
                 pstmt.executeUpdate();
                 index++;
