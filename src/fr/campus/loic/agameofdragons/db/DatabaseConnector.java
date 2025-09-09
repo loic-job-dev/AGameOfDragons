@@ -111,8 +111,11 @@ public class DatabaseConnector {
      * Displays on the console all the characters saved in the database
      */
     public void getHeroes() {
+
+        String url = "jdbc:mysql://"+this.host+":"+this.port+"/"+this.database;
+
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/AGameOfDragons", this.user, this.password);
+            conn = DriverManager.getConnection(url, this.user, this.password);
 
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM `Characters`");
@@ -124,8 +127,8 @@ public class DatabaseConnector {
 
             while (rs.next()) {  // return true if a row exists
                 //sysout for the first row = Id
+                menu.displayMessage("Id : " + rs.getInt("Id"));
                 menu.displayMessage("Nom : " + rs.getString("name"));
-                //sysout for the third row = Name
                 menu.displayMessage("Type : " + rs.getString("type"));
                 //sysout for life points
                 menu.displayMessage("Points de vie : " +rs.getString("life"));

@@ -65,6 +65,8 @@ public class Game {
         db.createDatabase();
         db.createBoard(board);
 
+        //db.getHeroes();
+
         menu.displayMessage(ConsoleColors.CYAN + "Bonjour à toi, nouveau joueur.\n" +
                 ConsoleColors.YELLOW + "Commence par créer ton personnage.\n");
 
